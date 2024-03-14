@@ -5,9 +5,11 @@
 
     min-width: 100%;
     height: pxRem(120);
-    position: relative;
-
+    position: sticky;
+    top: 0;
+    background: linear-gradient(180deg,#14161F -124.12%,rgba(20,22,31,0) 100%);
     padding: pxRem(35);
+    z-index: 1;
 
 
     &::before {

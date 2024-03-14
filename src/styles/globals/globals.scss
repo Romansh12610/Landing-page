@@ -37,13 +37,15 @@ a {
 // defining variables
 :root { 
     // colors
-    --color-dark: #14161f;
-    --color-bright: #fff557;
-    --color-primary: #d8e6f1;
-    --color-error: #FF6678;
+    --color-dark: hsl(229, 22%, 10%);
+    --color-bright: hsl(56, 100%, 67%);
+    --color-primary: hsl(206, 47%, 90%);
+    --color-error: hsl(353, 100%, 70%);
     --color-gray: hsla(206, 47%, 90%, 0.4);
-    --color-gradient-yellow: hsla(47, 75%, 78%, 1);
-    --color-gradient-violet: hsla(266, 77%, 88%, 1);
+    
+    --color-gradient-yellow: hsla(47, 75%, 78%, 0.8);
+    --color-gradient-violet: hsla(266, 77%, 88%, 0.8);
+    --color-gradient-purple: hsla(266, 100%, 73%, 0.8);
 
     :root {
         // transition

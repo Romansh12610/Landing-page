@@ -1,0 +1,20 @@
+@use 'utils' as *;
+
+.svgWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: pxRem(900);
+    width: 100%;
+    z-index: 0;
+    
+    & > svg {
+        mix-blend-mode: lighten;
+        filter: blur(30px);
+        shape-rendering: crispEdges;
+    }
+
+    & > rect {
+        transform: rotateY(15deg);
+    }
+}
