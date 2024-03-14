@@ -1,0 +1,51 @@
+@use 'utils' as *;
+
+.header {
+    @include flexRow(flex-start, center);
+
+    min-width: 100%;
+    height: pxRem(120);
+    position: relative;
+
+    padding: pxRem(35);
+
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        backdrop-filter: blur(6px);
+        z-index: 0;
+    }
+}
+
+.logo {
+    font-size: pxRem(29);
+    font-weight: 800;
+    letter-spacing: -1px;
+
+    z-index: 1;
+    text-transform: uppercase;
+}
+
+
+.header__nav {
+    @include flexRow(flex-start, center);
+
+    z-index: 99;
+    gap: pxRem(72);
+    margin-left: auto;
+}
+
+.header__nav_list {
+    @include flexRow(flex-start, center);
+
+    gap: pxRem(82);
+
+    & > li:last-of-type {
+        margin-left: pxRem(136);
+    }
+}

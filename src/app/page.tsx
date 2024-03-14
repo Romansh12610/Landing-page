@@ -1,10 +1,16 @@
+import { Header } from "@/components/Header";
+import { Cursor } from "@/components/Cursor";
 
-export default function Home() {
+export default function HomePage() {
 	return (
-		<main>
-			<div>
-				<p>Hello next js</p>
-			</div>
-		</main>
+		<>
+			<Cursor />
+			<Header />
+			<main>
+				<div>
+					<p>Hello next js</p>
+				</div>
+			</main>
+		</>
 	);
 }

@@ -1,0 +1,28 @@
+@use 'utils' as *;
+
+.cursor {
+    // mouse or other pointer devise used --> turn on custom cursor
+    @media (hover: hover) and (pointer: fine) {
+        display: block;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        mix-blend-mode: difference;
+        background-color: var(--color-bright);
+        z-index: 999;
+        position: fixed;
+        pointer-events: none;
+        transition: transform 200ms ease-in-out;
+        will-change: transform;
+    }
+
+    // sensor smartphone used --> turn on custom cursor
+    @media (hover: none) and (pointer: coarse) {
+        display: none;
+    }
+}
+
+
+.cursor_hover {
+    transform: scale(1.8);
+}

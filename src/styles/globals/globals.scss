@@ -1,8 +1,62 @@
+@use 'utils' as *;
+
+// resets
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    @media (hover: hover) and (pointer: fine) {
+        cursor: none;
+    }
+}
+
+button {
+    background-color: inherit;
+    border: none;
+}
+
+ul {
+    list-style: none;
+}
+
+button, input {
+    font: inherit;
+}
+
+li {
+    display: block;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+}
+
 // defining variables
 :root { 
     // colors
-    --white: hsl(0, 0%, 100%);
-    --black: hsl(0, 0%, 0%);
-    --gradient-yellow: hsla(47, 75%, 78%, 1);
-    --gradient-violet: hsla(266, 77%, 88%, 1);
+    --color-dark: #14161f;
+    --color-bright: #fff557;
+    --color-primary: #d8e6f1;
+    --color-error: #FF6678;
+    --color-gray: hsla(206, 47%, 90%, 0.4);
+    --color-gradient-yellow: hsla(47, 75%, 78%, 1);
+    --color-gradient-violet: hsla(266, 77%, 88%, 1);
+
+    :root {
+        // transition
+        --transition-time: 300ms;
+    }
+}
+
+body {
+    @include flexCol;
+
+    min-height: pxRem(9000);
+    font-weight: 500;
+
+    background-color: var(--color-dark);
+    color: var(--color-primary);
 }
