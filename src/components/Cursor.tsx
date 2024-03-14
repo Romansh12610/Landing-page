@@ -22,7 +22,7 @@ export const Cursor = () => {
             if (!cursorDOMRef.current) return;
 
             // custom attrib used to identify element
-            const relevantTarget = (e.target as HTMLElement).closest('[data-cursor-scaler]');
+            const relevantTarget = (e.target as HTMLElement).closest('[data-cursor-scaler=true]');
 
             if (!relevantTarget) return;
 
@@ -35,7 +35,7 @@ export const Cursor = () => {
 
             const relatedTarget = e.relatedTarget as HTMLElement;
 
-            if (relatedTarget && !relatedTarget.closest('[data-cursor-scaler]')) {
+            if (relatedTarget && !relatedTarget.closest('[data-cursor-scaler=true]')) {
                 cursorDOMRef.current.style.transform = 'scale(1)';
             }
         }

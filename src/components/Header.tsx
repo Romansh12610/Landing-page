@@ -1,14 +1,48 @@
+'use client';
+
 import styles from "@/styles/modules/header.module.scss";
 import { TextWithCopy } from "./shared/TextWithCopy";
 import { BtnWithTextCopy } from "./shared/BtnWithTextCopy";
+import { LogotypeSvg } from "./shared/LogotypeSvg";
+import { COLORS } from "@/misc/colors";
+
+import { useEffect, useRef } from "react";
 
 export const Header = () => {
 
+    const headerDOMRef = useRef<HTMLHeadElement | null>(null);
+
+    useEffect(() => {
+        const handleWheel = (e: WheelEvent) => {
+            if (!headerDOMRef.current) return;
+
+            // if scroll bottom
+            if (e.deltaY > 0) {
+                headerDOMRef.current.dataset.hidden = 'true';
+            }
+            // if scroll top
+            else {
+                headerDOMRef.current.dataset.hidden = 'false';
+            }
+        }
+
+        document.addEventListener('wheel', handleWheel);
+
+        return () => {
+            document.removeEventListener('wheel', handleWheel);
+        }
+    }, []);
+
     return (
-        <header className={styles.header}>
-            <a className={styles.logo} href="/" 
-                data-cursor-scaler={true}
-            >Место</a>
+        <header className={styles.header}
+            ref={headerDOMRef}
+        >
+            <LogotypeSvg 
+                width={103} 
+                height={24}
+                fill={COLORS[0]}
+                shouldScaleCursor={true} 
+            />
             <nav className={styles.header__nav}>
                 <ul className={styles.header__nav_list}>
                     <li>

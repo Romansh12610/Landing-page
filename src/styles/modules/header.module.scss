@@ -5,12 +5,20 @@
 
     min-width: 100%;
     height: pxRem(120);
-    position: sticky;
+    position: fixed;
     top: 0;
     background: linear-gradient(180deg,#14161F -124.12%,rgba(20,22,31,0) 100%);
     padding: pxRem(35);
-    z-index: 1;
-
+    z-index: 2;
+    
+    // visibility
+    transition: transform 450ms ease-in-out;
+    // shown (default)
+    transform: translateY(0);
+    // hidden
+    &[data-hidden=true] {
+        transform: translateY(-120px);
+    }
 
     &::before {
         content: '';
@@ -23,16 +31,6 @@
         z-index: 0;
     }
 }
-
-.logo {
-    font-size: pxRem(29);
-    font-weight: 800;
-    letter-spacing: -1px;
-
-    z-index: 1;
-    text-transform: uppercase;
-}
-
 
 .header__nav {
     @include flexRow(flex-start, center);
