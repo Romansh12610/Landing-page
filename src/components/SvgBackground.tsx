@@ -6,7 +6,7 @@ import { useRef, useEffect } from "react";
 
 const DEFAULT_VIEWPORT_WIDTH = 1200;
 
-export const SvgBackground = () => {
+const SvgBackground = () => {
 	// scale rectangles relatively to viewport width / 1200
 	const scaleCoefficient = useRef(1);
 
@@ -131,6 +131,8 @@ export const SvgBackground = () => {
 	);
 };
 
+export default SvgBackground;
+
 // coords of rect for 1200 viewport width
 const DEFAULT_COORDS = {
 	width: 1652,
@@ -144,6 +146,7 @@ interface SvgRectProps {
 	// scale rect relatively to width of screen
 	scaler: number;
 }
+
 const SvgRectangle = ({
 	xOffset,
 	yOffset,

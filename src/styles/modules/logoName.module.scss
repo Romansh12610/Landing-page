@@ -4,8 +4,14 @@
     @include flexCol(center);
 
     gap: pxRem(110);
+    width: 100%;
+    height: var(--default-height);
     position: relative;
-    top: pxRem(400);
+    overflow: hidden;
+
+    transition: transform var(--time-1) var(--cubic-bezier);
+    transform: translateY(400px);
+    will-change: transform;
 }
 
 .logo__heading {
@@ -18,4 +24,12 @@
     max-width: pxRem(740);
     width: 100%;
     margin: 0 0 pxRem(50) 0;
+}
+
+
+.logo__textLine_wrapper {
+    @include flexRow(flex-start, center);
+
+    position: relative;
+    height: pxRem(450);
 }

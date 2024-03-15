@@ -1,0 +1,52 @@
+@use 'utils' as *;
+
+
+.runningLine__wrapper {
+    @include flexRow(flex-start, center, pxRem(40));
+
+    width: 200%;
+    transition: transform var(--cubic-bezier) var(--time-running-line);
+    will-change: transform;
+
+    &[data-mode=small] {
+        background-color: var(--color-bright);
+    }
+}
+
+// header
+.runningLine__item_big {
+    @include flexRow;
+    gap: pxRem(10);
+
+    // helper text (для)
+    & > span:nth-child(1) {
+        @include fontMedium;
+
+        height: fit-content;
+        border: pxRem(3) solid var(--color-dark);
+        padding: pxRem(4) pxRem(12) pxRem(8);
+        border-radius: pxRem(48);
+    }
+
+    // main text
+    & > span:nth-child(2) {
+        @include fontBigCentered;
+        color: var(--color-dark);
+
+        align-self: flex-end;
+    }   
+}
+
+
+.runningLine__item_small {
+    @include flexRow(flex-start, center);
+    gap: pxRem(10);
+
+    & > span {
+        @include fontMedium;
+    }
+
+    & > svg {
+        align-self: flex-start;
+    }
+}

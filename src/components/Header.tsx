@@ -3,7 +3,7 @@
 import styles from "@/styles/modules/header.module.scss";
 import { TextWithCopy } from "./shared/TextWithCopy";
 import { BtnWithTextCopy } from "./shared/BtnWithTextCopy";
-import { LogotypeSvg } from "./shared/LogotypeSvg";
+import { LogotypeSvg } from "./shared/svg/LogotypeSvg";
 import { COLORS } from "@/misc/colors";
 
 import { useEffect, useRef } from "react";

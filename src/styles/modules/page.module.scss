@@ -6,3 +6,25 @@
     width: 100%;
     height: 100%;
 }
+
+
+.main__section_first {
+    width: 100%;
+}
+
+
+.main__intro_wrapper {
+    width: 100%;
+    height: var(--default-height);
+
+    transition: transform var(--cubic-bezier) var(--time-1);
+}
+
+
+.main__description_wrapper {
+    @include fontBigCentered;
+    @include flexCol(center, center);
+
+    height: pxRem(512);
+    padding: pxRem(154) pxRem(38) 0;
+}

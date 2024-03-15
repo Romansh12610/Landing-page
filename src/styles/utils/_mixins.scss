@@ -18,3 +18,21 @@
     gap: $gap;
     flex-wrap: $wrap;
 };
+
+// fonts
+@mixin fontBigCentered {
+    font-weight: 500;
+    font-size: pxRem(65);
+    line-height: 0.9;
+    text-align: center;
+    letter-spacing: -0.04em;
+    color: var(--color-primary);
+}
+
+@mixin fontMedium {
+    font-size: pxRem(29);
+    line-height: 1;
+    text-align: center;
+    letter-spacing: -0.06em;
+    color: var(--color-dark);
+}

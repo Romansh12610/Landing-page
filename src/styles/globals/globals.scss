@@ -48,10 +48,14 @@ a {
     --color-gradient-violet: hsla(266, 77%, 88%, 0.8);
     --color-gradient-purple: hsla(266, 100%, 73%, 0.8);
 
-    :root {
-        // transition
-        --transition-time: 300ms;
-    }
+    // animation / transition
+    --cubic-bezier: cubic-bezier(0, -0.01, 0.25, 1);
+    --time-1: 1.2s;
+    --time-running-line: 1.5s;
+
+    // heights
+    // + 10px added for running line visibility
+    --default-height: 910px;
 }
 
 body {
