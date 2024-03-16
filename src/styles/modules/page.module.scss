@@ -8,7 +8,7 @@
 }
 
 
-.main__section_first {
+.main__section_intro_screen {
     width: 100%;
 }
 
@@ -27,4 +27,19 @@
 
     height: pxRem(512);
     padding: pxRem(154) pxRem(38) 0;
+}
+
+
+.main__running_line_wrapper_middle {
+    @include flexCol(center, center);
+
+    height: pxRem(450);
+}
+
+.main__section_services {
+    @include flexCol;
+
+    max-width: pxRem(1600);
+    padding: 0 pxRem(40);
+    width: 100%;
 }

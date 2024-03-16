@@ -80,6 +80,7 @@ export const LogoName = () => {
             <div className={styles.logo__textLine_wrapper}>
                 <RunningTextLine 
 					mode='big'
+					animationScrollBorders={[0, 9000]}
 					transforms={{
 						translateX: {
 							step: TRANSLATE_STEP,

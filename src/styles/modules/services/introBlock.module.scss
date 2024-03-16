@@ -1,0 +1,19 @@
+@use 'utils' as *;
+
+.services__wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-content: start;
+
+    & > h2 {
+        @include fontLargeUppercased;
+    }
+}
+
+.services__tabs_wrapper {
+    @include flexCol;
+    gap: pxRem(40);
+
+    padding: pxRem(20) pxRem(20) 0 pxRem(40);
+}

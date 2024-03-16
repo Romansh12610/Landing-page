@@ -9,7 +9,7 @@ export const ArrowSvg = ({ width, height }: ArrowProps) => (
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      transform="rotate(-5)"
+      transform='rotate(-5)'
     >
       <path
         stroke="#14161F"

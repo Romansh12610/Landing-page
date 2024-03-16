@@ -6,13 +6,18 @@ const TEXT = 'Место для экспертизы и творчества';
 
 // transformation values
 // running line Options
-const TRANSLATE_BORDERS: TupleNum2 = [-150, 150];
-const TRANSLATE_STEP = 20;
+const TRANSLATE_BORDERS: TupleNum2 = [-300, 300];
+const TRANSLATE_STEP = 50;
 
-const ROTATE_BORDERS: TupleNum2 = [5, -5];
-const ROTATE_STEP = 0.8;
+const ROTATE_BORDERS: TupleNum2 = [6, -6];
+const ROTATE_STEP = 1.2;
 
-export const RunningLineSmall = () => {
+interface RunningLineSmallProps {
+    // where to start / end animations
+    animationScrollBorders: TupleNum2;
+}
+
+export const RunningLineSmall = ({ animationScrollBorders }: RunningLineSmallProps) => {
 
     const renderingSpanItems = new Array(8).fill(0).map(() => {
         return <RunningLineItemSmall text={TEXT} />
@@ -21,6 +26,7 @@ export const RunningLineSmall = () => {
     return (
         <RunningTextLine 
             mode='small'
+            animationScrollBorders={animationScrollBorders}
             transforms={{
                 translateX: {
                     step: TRANSLATE_STEP,

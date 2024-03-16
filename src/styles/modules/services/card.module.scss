@@ -1,0 +1,201 @@
+@use 'utils' as *;
+
+$cardGap: 40;
+
+.card__wrapper {
+    @include flexCol;
+
+    transition: transform 1.2s var(--cubic-bezier), opacity 1s var(--cubic-bezier);
+
+    // hover state on parent
+    &:hover {
+        & * {
+            color: var(--color-bright);
+        }
+
+        // title
+        & .card__titleSvg_wrapper {
+            border-color: var(--color-bright);
+            padding-top: pxRem(60);
+            gap: 0;
+        }
+
+        // svg
+        & svg {
+            stroke: var(--color-bright);
+            transform: translateY(-20px) scale(0.4);
+        }
+
+        // subtitle if presented
+        &[data-has-subtitle=true] {
+            & .card__subtitle {
+                transform: translateY(-50px);
+            }
+        }
+
+        // description
+        & .card__description {
+            transform: translateY(-50px);
+        }
+
+        // list
+        & .card__option_list {
+            transform: translateY(-50px);
+
+            & .card__hider_list {
+                transform: translateY(100%);
+                
+                & .card__hider_ellipsis {
+                    opacity: 0;
+                }
+            }
+        }
+
+        & .card__list_option {
+            border-color: var(--color-bright);
+        }
+    }
+}
+
+.card__titleSvg_wrapper {
+    @include flexCol(center, flex-start, pxRem(40));
+
+    border: 2px solid var(--color-primary);
+    border-bottom: none;
+    padding: pxRem(40) pxRem(20) 0;
+    color: var(--color-primary);
+    height: fit-content;
+    width: 100%;
+
+    will-change: padding, gap, transform;
+    transition: border 0.6s var(--cubic-bezier), padding 0.6s var(--cubic-bezier), gap 0.6s var(--cubic-bezier);
+    transform-origin: center top;
+    z-index: 0;
+
+    // title
+    & > h3 {
+        @include fontH3;
+        @include flexCol(center, center);
+        text-align: center;
+
+        & > .card__title_span {
+            white-space: nowrap;
+        } 
+    }
+
+
+    // svg
+    & > svg {
+        transition: transform 0.5s var(--cubic-bezier), stroke 0.5s var(--cubic-bezier);
+        stroke: var(--color-primary);
+
+        transform: scale(0.85);
+    }
+}
+
+
+.card__subtitle {
+    width: 100%;
+    font-weight: 500;
+    font-size: 29px;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    color: var(--color-primary);
+    transition: color 0.6s var(--cubic-bezier), transform 0.6s var(--cubic-bezier);
+
+    z-index: 3;
+    border: 5px solid var(--color-dark);
+    padding-top: pxRem(40);
+
+    margin-bottom: pxRem($cardGap);
+}
+
+
+.card__description {
+    width: 100%;
+    font-weight: 400;
+    font-size: pxRem(16);
+    line-height: 1.4;
+    letter-spacing: -0.04em;
+    color: var(--color-primary);
+    position: relative;
+
+    transition: color 0.6s var(--cubic-bezier), transform 0.6s var(--cubic-bezier);
+    // if subtitle not presented
+    &[data-has-subtitle=false] {
+        z-index: 3;
+        border: 5px solid var(--color-dark);
+        padding-top: pxRem(40);
+    }
+
+    margin-bottom: pxRem($cardGap);
+}
+
+
+$listOptionHeight: 40;
+$listGapHeight: 10;
+
+.card__option_list {
+    @include flexCol;
+    gap: pxRem($listGapHeight);
+
+    transition: transform 0.6s var(--cubic-bezier);
+    position: relative;
+
+    // pseudo element 2 options down from top
+    $pseudoTopPosition: calc($listOptionHeight * 2 + $listGapHeight) + 10; // 10 = small offset
+
+    & > .card__hider_list {
+        position: absolute;
+        top: #{$pseudoTopPosition}px;
+        left: 0;
+        width: 100%;
+        height: calc(100% - pxRem($pseudoTopPosition));
+        background-color: var(--color-dark);
+        z-index: 10;
+        transition: transform 0.6s var(--cubic-bezier);
+
+        & > .card__hider_ellipsis {
+
+            text-align: center;
+            font-size: pxRem(27);
+            width: pxRem(44);
+            height: pxRem(30);
+            border: 2px solid var(--color-primary);
+            border-radius: pxRem(47);
+            opacity: 1;
+            z-index: 10;
+            position: relative;
+
+            transition: opacity 0.6s var(--cubic-bezier);
+
+            & > span {
+                position: absolute;
+                top: -11px;
+                left: 8px;
+            }
+        }
+    }
+}
+
+
+.card__list_option {
+    width: fit-content;
+    height: pxRem($listOptionHeight);
+    border: 2px solid var(--color-primary);
+    border-radius: pxRem(48);
+    color: var(--color-primary);
+    padding: pxRem(8) pxRem(12);
+
+    transition: border-color 0.6s var(--cubic-bezier);
+
+    & > p {
+        font-weight: 500;
+        font-size: pxRem(17);
+        line-height: 1.2;
+        text-align: center;
+        letter-spacing: -0.06em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

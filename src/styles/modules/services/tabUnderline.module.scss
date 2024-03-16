@@ -1,0 +1,70 @@
+@use 'utils' as *;
+
+@mixin tabSelected {
+    color: var(--color-bright);
+        
+    &::before {
+        background-color: var(--color-bright);
+        width: 100%;
+    }
+
+    & > .tab_btn_counter {
+        border-color: var(--color-bright);
+    }
+}
+
+.tab_btn_underline {
+    @include fontTab;
+
+    @include flexRow;
+    gap: pxRem(10);
+
+    color: var(--color-primary);
+    position: relative;
+    max-width: pxRem(480);
+    width: 100%;
+    text-align: left;
+    padding-bottom: pxRem(18);
+    overflow-x: hidden;
+    transition: color 0.5s var(--cubic-bezier);
+
+    // underline
+    &::before {
+        content: '';
+        height: 2px;
+        width: 0;
+        
+        background-color: var(--color-primary);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        mix-blend-mode: difference;
+        transition: width 0.5s var(--cubic-bezier), background-color 0.5s var(--cubic-bezier);
+    }
+
+
+    // hover state
+    &:hover {
+        @include tabSelected;
+    }
+
+    &[data-selected=true] {
+        @include tabSelected;
+    }
+}
+
+// number in circle
+.tab_btn_counter {
+    height: fit-content;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    font-weight: 500;
+    font-size: pxRem(12);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    padding: pxRem(4) pxRem(7);
+    display: inline-block;
+
+    transition: border-color 0.5s var(--cubic-bezier), color 0.5s var(--cubic-bezier);
+}

@@ -1,0 +1,9 @@
+@use 'utils' as *;
+
+
+.services__card_container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(350px,480px));
+    justify-content: center;
+    gap: 0 pxRem(40);
+}

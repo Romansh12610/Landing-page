@@ -2,7 +2,7 @@
 
 
 .runningLine__wrapper {
-    @include flexRow(flex-start, center, pxRem(40));
+    @include flexRow(center, center, pxRem(40));
 
     width: 200%;
     transition: transform var(--cubic-bezier) var(--time-running-line);
@@ -40,13 +40,17 @@
 
 .runningLine__item_small {
     @include flexRow(flex-start, center);
-    gap: pxRem(10);
+    gap: pxRem(40);
+    height: pxRem(54);
+
 
     & > span {
         @include fontMedium;
+        white-space: nowrap;
     }
 
+
     & > svg {
-        align-self: flex-start;
+        transform: translateY(-5px) rotate(-5deg) scale(0.9);
     }
 }

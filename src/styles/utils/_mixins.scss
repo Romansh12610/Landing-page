@@ -36,3 +36,25 @@
     letter-spacing: -0.06em;
     color: var(--color-dark);
 }
+
+@mixin fontLargeUppercased {
+    font-weight: 700;
+    font-size: pxRem(120);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    mix-blend-mode: difference;
+}
+
+@mixin fontTab {
+    font-size: pxRem(45);
+    line-height: 1.2;
+    letter-spacing: -0.06em;
+}
+
+@mixin fontH3 {
+    font-weight: 500;
+    font-size: pxRem(45);
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
