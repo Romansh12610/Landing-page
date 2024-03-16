@@ -27,8 +27,18 @@
         }
 
         > span:nth-child(2) {
-            transform: rotate(0deg) translateY(0);
+            transform: rotate(0deg) translateY(-2px);
             text-decoration: 2px underline solid var(--color-primary);
+        }
+    }
+
+
+    &[data-color=dark] {
+        &:hover {
+            > span:nth-child(2) {
+                transform: rotate(0deg) translateY(-2px);
+                text-decoration: 2px underline solid var(--color-dark);
+            }
         }
     }
 }

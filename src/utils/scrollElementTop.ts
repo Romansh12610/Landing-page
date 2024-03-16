@@ -14,8 +14,15 @@ export const scrollElementTop = (
     if (elementDOMref.current == null || currentScrollRef.current == null) return;
 
     // scroll down (negative)
-    if (e.deltaY > 0) {
-        let remainScroll = Math.abs(currentScrollRef.current - scrollEndBorder);
+    if (e.deltaY > 0 && Math.abs(currentScrollRef.current) < scrollEndBorder) {
+
+        console.log('scroll bottom');
+
+        let remainScroll = scrollEndBorder - Math.abs(currentScrollRef.current);
+
+        console.log('current scroll is: ', currentScrollRef.current);
+        console.log('remain scroll: ', remainScroll);
+
 
         if (scrollStep <= remainScroll) {
             currentScrollRef.current -= scrollStep;
@@ -29,7 +36,10 @@ export const scrollElementTop = (
 
         // scroll to end
         else {
-            currentScrollRef.current = scrollEndBorder;
+
+            console.log('scroll to end');
+
+            currentScrollRef.current -= remainScroll;
 
             requestAnimationFrame(() => {
                 if (elementDOMref.current != null) {
@@ -40,8 +50,8 @@ export const scrollElementTop = (
     }
 
     // scroll up (positive)
-    else {
-        let remainScroll = Math.abs(scrollStartBorder - currentScrollRef.current);
+    else if (e.deltaY < 0 && Math.abs(currentScrollRef.current) > scrollStartBorder) {
+        let remainScroll = Math.abs(currentScrollRef.current) - scrollStartBorder;
 
         if (scrollStep <= remainScroll) {
             currentScrollRef.current += scrollStep;

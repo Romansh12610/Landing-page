@@ -8,9 +8,9 @@ interface ScrollContainerProps {
 }
 
 // scroll distance in px per 1 wheel event
-const SCROLL_STEP = 110;
+const SCROLL_STEP = 105;
 const SCROLL_START = 0;
-const HEIGHT_OF_CONTAINER = 9000;
+const HEIGHT_OF_CONTAINER = 4700;
 
 export const ScrollContainer = ({ children }: ScrollContainerProps) => {
 
@@ -19,7 +19,7 @@ export const ScrollContainer = ({ children }: ScrollContainerProps) => {
     // raw value
     const MAX_SCROLL_VALUE = useRef({
         settled: false,
-        value: 8000,
+        value: 3700,
     });
 
     // get max scroll value on mount

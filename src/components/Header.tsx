@@ -46,13 +46,13 @@ export const Header = () => {
             <nav className={styles.header__nav}>
                 <ul className={styles.header__nav_list}>
                     <li>
-                        <TextWithCopy text="Услуги" />
+                        <TextWithCopy text="Услуги" color='light' />
                     </li>
                     <li>
-                        <TextWithCopy text="Кейсы" />
+                        <TextWithCopy text="Кейсы" color='light' />
                     </li>
                     <li>
-                        <TextWithCopy text="Контакты" />
+                        <TextWithCopy text="Контакты" color='light' />
                     </li>
                 </ul>
                 <BtnWithTextCopy text="Обсудить задачу" mode="small" />

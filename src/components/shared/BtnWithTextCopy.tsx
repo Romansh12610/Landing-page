@@ -2,7 +2,7 @@ import styles from "@/styles/modules/btnWithTextCopy.module.scss";
 
 interface BtnWithTextProps {
     text: string;
-    mode: 'big' | 'small';
+    mode: 'large' | 'big' | 'small';
 }
 
 export const BtnWithTextCopy = (props: BtnWithTextProps) => {

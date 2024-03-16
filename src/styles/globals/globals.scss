@@ -55,13 +55,15 @@ a {
 
     // heights
     // + 10px added for running line visibility
+    --scroll-height: 4450px;
     --default-height: 910px;
 }
 
 body {
     @include flexCol;
 
-    min-height: pxRem(9000);
+    height: var(--scroll-height);
+
     font-weight: 500;
 
     background-color: var(--color-dark);

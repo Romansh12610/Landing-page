@@ -64,3 +64,16 @@
     line-height: 1.4;
     letter-spacing: -0.04em;
 }
+
+// breakpoints
+@mixin breakpointUp($minWidth) {
+    @media (min-width: #{$minWidth}px) {
+        @content;
+    }
+}
+
+@mixin breakpointDown($maxWidth) {
+    @media (max-width: #{$maxWidth}px) {
+        @content;
+    }
+}

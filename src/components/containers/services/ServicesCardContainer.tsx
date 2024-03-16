@@ -46,7 +46,7 @@ const CARD_ANIMATION_DATA: CardAnimationData[] = [
         step: 15,
         fromPositiveToNegative: false,
         borders: {
-            translateBorders: [-15, 120],
+            translateBorders: [-15, 100],
             scrollEnterBorders: [1000, 3000],
         },
     },
@@ -62,7 +62,7 @@ const CARD_ANIMATION_DATA: CardAnimationData[] = [
         step: 15,
         fromPositiveToNegative: false,
         borders: {
-            translateBorders: [40, 180],
+            translateBorders: [15, 100],
             scrollEnterBorders: [1000, 3000],
         },
     },

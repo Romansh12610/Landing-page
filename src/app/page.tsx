@@ -12,6 +12,7 @@ import { TupleNum2 } from "@/types/tuples";
 import { ServicesSection } from "@/components/containers/services/ServicesSection";
 import { BtnWithTextCopy } from "@/components/shared/BtnWithTextCopy";
 import { LargeBtnGradient } from "@/components/LargeBtnGradient";
+import { Footer } from "@/components/Footer";
 
 const SvgBackground = dynamic(() => import("@/components/SvgBackground"), {
 	ssr: false,
@@ -49,6 +50,7 @@ export default function HomePage() {
 					<LargeBtnGradient text="Обсудить задачу" />
 
 				</main>
+				<Footer />
 			</ScrollContainer>
 		</>
 	);

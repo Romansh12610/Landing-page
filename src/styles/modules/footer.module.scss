@@ -1,0 +1,130 @@
+@use 'utils' as *;
+
+
+.footer {
+    @include flexCol(center);
+
+    margin-top: pxRem(225);
+    width: 100%;
+    gap: pxRem(80);
+    padding: pxRem(125) pxRem(40);
+    position: relative;
+
+
+    // large btn 
+    & button {
+        border: none;
+        background: transparent;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        white-space: nowrap;
+        align-self: flex-start;
+        padding-inline: 0.5em;
+        border-radius: 0;
+
+
+        @include breakpointDown(1199) {
+            align-self: flex-start;
+            font-size: 48px;
+            padding-left: 0;
+        }
+
+        @include breakpointUp(1200) {
+            font-size: pxRem(110);
+        }
+    }
+}
+
+.footer__grid {
+    width: 100%;
+    display: grid;
+
+    // mobile state
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(3, auto);
+    justify-content: start;
+    align-items: start;
+    // tablet
+    @include breakpointUp(768) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, auto);
+    }
+    // desktop
+    @include breakpointUp(1200) {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(1, auto);
+    }
+}
+
+// lists
+.footer__list {
+    @include flexCol;
+    gap: pxRem(16);
+
+    & > li {
+        overflow-y: visible;
+        z-index: 1;
+    }
+
+    & a, p {
+        @include fontDescription;
+        color: var(--color-dark);
+    }
+
+    & [data-uppercased=true] {
+        text-transform: uppercase;
+    }
+
+    // first list
+    &:nth-child(1) {
+        // mobile
+        grid-row: 3 / 4;
+        // tablet
+        @include breakpointUp(768) {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+        }
+        // desktop
+        @include breakpointUp(1200) {
+            flex-direction: row;
+            gap: pxRem(25);
+        }
+    }
+
+    // second list
+    &:nth-child(2) {
+        // mobile
+        grid-row: 1 / 2;
+        margin-bottom: pxRem(16);  
+        // tablet
+        @include breakpointUp(768) {
+            grid-column: 2 / 3;
+        }
+        // desktop
+        @include breakpointUp(1200) {
+            justify-self: end;
+        }
+    }
+}
+
+.footer__link {
+    color: var(--color-dark);
+
+    // mobile
+    @include breakpointDown(768) {
+        grid-row: 2 / 3;
+        margin-bottom: pxRem(60);
+    } 
+    // tablet
+    @include breakpointUp(768) {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+    }
+    // desktop
+    @include breakpointUp(1200) {
+        grid-column: 3 / 4;
+        grid-row: 1 / 2;
+        justify-self: end;
+    }
+}
