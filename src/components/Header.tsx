@@ -55,7 +55,7 @@ export const Header = () => {
                         <TextWithCopy text="Контакты" />
                     </li>
                 </ul>
-                <BtnWithTextCopy text="Обсудить задачу" />
+                <BtnWithTextCopy text="Обсудить задачу" mode="small" />
             </nav>
         </header>
     )

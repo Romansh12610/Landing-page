@@ -9,7 +9,9 @@ import { IntroWrapper } from "@/components/containers/IntroWrapper";
 import { DescriptionBlock } from "@/components/containers/DescriptionBlock";
 import { RunningLineSmall } from "@/components/RunningLineSmall";
 import { TupleNum2 } from "@/types/tuples";
-import { ServicesSection } from "@/components/containers/ServicesSection";
+import { ServicesSection } from "@/components/containers/services/ServicesSection";
+import { BtnWithTextCopy } from "@/components/shared/BtnWithTextCopy";
+import { LargeBtnGradient } from "@/components/LargeBtnGradient";
 
 const SvgBackground = dynamic(() => import("@/components/SvgBackground"), {
 	ssr: false,
@@ -42,6 +44,10 @@ export default function HomePage() {
 					</div>
 
 					<ServicesSection />
+
+					<BtnWithTextCopy text="Все услуги" mode="big" />
+					<LargeBtnGradient text="Обсудить задачу" />
+
 				</main>
 			</ScrollContainer>
 		</>

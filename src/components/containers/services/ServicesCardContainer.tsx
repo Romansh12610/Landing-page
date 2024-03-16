@@ -1,10 +1,10 @@
 'use client';
 
 import styles from "@/styles/modules/services/servicesCardContainer.module.scss";
-import { ServiceCard } from "../shared/ServiceCard";
-import { TwoEllipsesSvg } from "../shared/svg/services/TwoEllipsesLineSvg";
-import { RotatedLinesSvg } from "../shared/svg/services/RotatedLinesSvg";
-import { CircleWithLineSvg } from "../shared/svg/services/CircleWithLineSvg";
+import { ServiceCard } from "@/components/shared/services/ServiceCard";
+import { TwoEllipsesSvg } from "@/components/shared/svg/services/TwoEllipsesLineSvg"; 
+import { RotatedLinesSvg } from "@/components/shared/svg/services/RotatedLinesSvg"; 
+import { CircleWithLineSvg } from "@/components/shared/svg/services/CircleWithLineSvg"; 
 import type { CardModeType } from "./ServicesSection";
 import type { PropertyDescription } from "@/utils/transformElementOnScroll";
 import { TupleNum2 } from "@/types/tuples";

@@ -1,5 +1,5 @@
 'use client';
-import type { CardAnimationData } from "../containers/ServicesCardContainer";
+import type { CardAnimationData } from "@/components/containers/services/ServicesCardContainer";
 import styles from "@/styles/modules/services/card.module.scss";
 import { nextWordNewLine } from "@/utils/textFormat/nextWorkNewLine";
 import { useEffect, useLayoutEffect, useRef } from "react";

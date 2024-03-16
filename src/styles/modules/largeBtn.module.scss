@@ -1,0 +1,59 @@
+@use 'utils' as *;
+
+
+.largeBtn {
+    @include flexCol(center, center);
+
+    font-weight: 400;
+    font-size: pxRem(35);
+    line-height: 120%;
+    text-align: center;
+    letter-spacing: -0.06em;
+    
+    width: 90%;
+    max-height: pxRem(140);
+    border-radius: pxRem(104);
+    padding: pxRem(46) 0;
+    margin-top: pxRem(80);
+    color: var(--color-dark);
+    mix-blend-mode: difference;
+    position: relative;
+    
+    transition: opacity 0.6s var(--cubic-bezier);
+
+    background: linear-gradient(45deg, var(--color-bright), var(--color-gradient-yellow), var(--color-gradient-violet), var(--color-gradient-purple));
+    background-size: cover;
+    z-index: 1;
+
+
+    & > span {
+        z-index: 10;
+        opacity: 1;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: pxRem(104);
+        opacity: 0.3;
+        background: linear-gradient(10deg, var(--color-gradient-violet), var(--color-bright), var(--color-gradient-yellow), var(--color-gradient-purple));
+        z-index: 0;
+
+        transition: opacity 0.6s var(--cubic-bezier);
+    }
+
+    // hover state
+    &:hover {
+        opacity: 0.8;
+        z-index: 0;
+
+        &::before {
+            z-index: 10;
+            opacity: 1;
+        }
+    }
+}

@@ -1,0 +1,48 @@
+@use 'utils' as *;
+
+.card__wrapper {
+    @include flexCol;
+
+    gap: pxRem(40);
+    position: relative;
+    width: 100%;
+    min-height: pxRem(200);
+    padding-bottom: pxRem(40);
+    border-bottom: 2px solid var(--color-primary);
+    transition: border-color 0.6s var(--cubic-bezier);
+
+
+    & > svg {
+        transition: fill 0.6s var(--cubic-bezier);
+        fill: var(--color-primary);
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    // hover state
+    &:hover {
+        border-color: var(--color-bright);
+
+        & * {
+            color: var(--color-bright);
+        }
+
+        & > svg {
+            fill: var(--color-bright);
+        }
+    }
+}
+
+.card__title {
+    @include fontMedium;
+
+    color: var(--color-primary);
+    transition: color 0.6s var(--cubic-bezier); 
+}
+
+.card__description {
+    @include fontDescription;
+
+    transition: color 0.6s var(--cubic-bezier);
+}

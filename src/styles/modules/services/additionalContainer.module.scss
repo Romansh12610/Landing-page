@@ -1,0 +1,10 @@
+@use 'utils' as *;
+
+.services__add_container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 pxRem(40);
+
+    margin: pxRem(80) 0;
+    transition: transform 1.2s var(--cubic-bezier);
+}

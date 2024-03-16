@@ -1,4 +1,4 @@
-import { TabWithUnderline } from "../shared/TabWithUndeline";
+import { TabWithUnderline } from "@/components/shared/TabWithUndeline"; 
 import styles from "@/styles/modules/services/introBlock.module.scss";
 import type { CardModeType } from "./ServicesSection";
 

@@ -3,6 +3,7 @@ import styles from "@/styles/modules/page.module.scss";
 import { ServicesIntroBlock } from "./ServicesIntroBlock";
 import { ServicesCardContainer } from "./ServicesCardContainer";
 import { useEffect, useState } from "react";
+import { ServicesAdditionalContainer } from "./ServicesAdditionalContainer";
 
 export type CardModeType = 'business' | 'territory';
 export type ContainerAnimation = 'enter' | 'exit';
@@ -38,7 +39,11 @@ export const ServicesSection = () => {
                 setServicesToBusiness={setServicesToBusiness}
                 setServicesToTerritory={setServicesToTerritory}
             />
-            <ServicesCardContainer servicesMode={servicesMode} animationState={containerAnimationState} />
+            <ServicesCardContainer 
+                servicesMode={servicesMode}
+                animationState={containerAnimationState} 
+            />
+            <ServicesAdditionalContainer />
         </section>
     )
 };

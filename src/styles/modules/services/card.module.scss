@@ -112,11 +112,9 @@ $cardGap: 40;
 
 
 .card__description {
+    @include fontDescription;
+    
     width: 100%;
-    font-weight: 400;
-    font-size: pxRem(16);
-    line-height: 1.4;
-    letter-spacing: -0.04em;
     color: var(--color-primary);
     position: relative;
 
