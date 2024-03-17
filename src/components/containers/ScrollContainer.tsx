@@ -1,7 +1,10 @@
 'use client';
+
 import styles from "@/styles/modules/scrollContainer.module.scss";
-import { useEffect, useRef } from "react";
-import { scrollElementTop } from "@/utils/scrollElementTop";
+import { useEffect, useRef, useState, createContext } from "react";
+import { scrollContainerElementTop } from "@/utils/scrollContainerElementTop";
+import { TupleNum2 } from "@/types/tuples";
+import { ScrollContext } from "@/hooks/useScrollContext";
 
 interface ScrollContainerProps {
     children: React.ReactNode;
@@ -10,28 +13,63 @@ interface ScrollContainerProps {
 // scroll distance in px per 1 wheel event
 const SCROLL_STEP = 105;
 const SCROLL_START = 0;
-const HEIGHT_OF_CONTAINER = 4700;
+const SCROLL_END_RAW = 3700;
 
+interface ScrollBorderState {
+    borders: TupleNum2;
+    isScrollEndSettled: boolean;
+}
+
+interface TranslateBorderState {
+    borders: TupleNum2;
+    isTranslateEndSettled: boolean;
+}
+
+
+
+// COMPONENT
 export const ScrollContainer = ({ children }: ScrollContainerProps) => {
 
     const scrollContainerDOMRef = useRef<HTMLDivElement | null>(null);
-    const CURRENT_SCROLL_VALUE = useRef(SCROLL_START);
-    // raw value
-    const MAX_SCROLL_VALUE = useRef({
-        settled: false,
-        value: 3700,
+    const scrollValueRef = useRef(SCROLL_START);
+    const translateValueRef = useRef(SCROLL_START);
+
+    // 3700 hardcoded into SCROLL_END
+    // it will not work on every screen resolution
+    // using effect to get actual height of scroll
+    const [scrollBordersState, setScrollBordersState] = useState<ScrollBorderState>({
+        borders: [SCROLL_START, SCROLL_END_RAW],
+        isScrollEndSettled: false,
     });
 
-    // get max scroll value on mount
+    // borders for translate
+    // are same as for SCROLL
+    // but end value is negative
+    const [translateBordersState, setTranslateBordersState] = useState<TranslateBorderState>({
+        borders: [SCROLL_START, SCROLL_END_RAW * -1],
+        isTranslateEndSettled: false,
+    });
+
+    // get actual SCROLL_END border
     useEffect(() => {
-        // if set value already - return
-        if (MAX_SCROLL_VALUE.current.settled) return;
+        // if settled, no need to reset
+        if (scrollBordersState.isScrollEndSettled === true && translateBordersState.isTranslateEndSettled === true) return;
 
-        if (typeof document !== 'undefined') {
+        if (typeof document !== 'undefined' && scrollContainerDOMRef.current != null) {
+            // height of the whole document - height of the viewport
+            const pageHeight = scrollContainerDOMRef.current.scrollHeight - document.documentElement.clientHeight * 1.25;
 
-            MAX_SCROLL_VALUE.current.value = HEIGHT_OF_CONTAINER - document.documentElement.clientHeight;
+            const ACTUAL_SCROLL_END = pageHeight;
 
-            MAX_SCROLL_VALUE.current.settled = true;
+            setScrollBordersState({
+                borders: [SCROLL_START, ACTUAL_SCROLL_END],
+                isScrollEndSettled: true,
+            });
+            
+            setTranslateBordersState({
+                borders: [SCROLL_START, ACTUAL_SCROLL_END * -1],
+                isTranslateEndSettled: true,
+            });
         }
     }, []);
 
@@ -42,14 +80,34 @@ export const ScrollContainer = ({ children }: ScrollContainerProps) => {
         const handleCustomScroll = (e: WheelEvent) => {
             e.preventDefault();
 
-            scrollElementTop(
-                e, 
-                scrollContainerDOMRef,
-                CURRENT_SCROLL_VALUE,
-                SCROLL_STEP,
-                SCROLL_START,
-                MAX_SCROLL_VALUE.current.value,
-            );
+            // if not actual states
+            if (scrollBordersState.isScrollEndSettled === false || translateBordersState.isTranslateEndSettled === false) return;
+
+            // if does not have refs
+            if (scrollValueRef.current == null || translateValueRef.current == null) return;
+
+            const currentScrollValue = scrollValueRef.current;
+
+            // log
+            console.log('custom scroll now: ', currentScrollValue);
+
+            // should transform and scroll?
+            const shouldScrollAndTransform = (e.deltaY > 0 && (currentScrollValue >= scrollBordersState.borders[0] && currentScrollValue <= scrollBordersState.borders[1]) 
+				|| (e.deltaY < 0 && (currentScrollValue <= scrollBordersState.borders[1] && currentScrollValue >= scrollBordersState.borders[0])));
+
+			// transform element if scroll inside 'scroll window of element'
+            if (shouldScrollAndTransform) {
+                scrollContainerElementTop({
+                    e,
+                    elementDOMref: scrollContainerDOMRef,
+                    currentScrollValueRef: scrollValueRef,
+                    translateYValueRef: translateValueRef,
+                    scrollBorders: scrollBordersState.borders,
+                    translateBorders: translateBordersState.borders,
+                    step: SCROLL_STEP,
+                    translationUnit: 'px',
+                });
+            }
         };
 
         document.addEventListener('wheel', handleCustomScroll);
@@ -58,13 +116,17 @@ export const ScrollContainer = ({ children }: ScrollContainerProps) => {
             document.removeEventListener('wheel', handleCustomScroll);
         }
 
-    }, []);
+    }, [scrollBordersState, translateBordersState]);
 
     return (
         <div className={styles.scrollContainer}
             ref={scrollContainerDOMRef}
         >
-            {children}
+            <ScrollContext.Provider value={{
+                currentScrollValue: scrollValueRef,
+            }}>
+                {children}
+            </ScrollContext.Provider>
         </div>
     )
 };

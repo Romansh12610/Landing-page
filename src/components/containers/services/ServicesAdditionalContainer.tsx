@@ -5,6 +5,7 @@ import styles from "@/styles/modules/services/additionalContainer.module.scss";
 import { transformElementOnScroll } from "@/utils/transformElementOnScroll";
 import { useEffect, useRef } from "react";
 import type { CardAnimationData } from "./ServicesCardContainer";
+import { useScrollContext } from "@/hooks/useScrollContext";
 
 // text data
 interface CardTextData {
@@ -30,12 +31,12 @@ const CARD_TEXT_DATA: CardTextData[] = [
 
 // transformation props
 const TRANSFORMS_DATA: CardAnimationData = {
-    step: 25,
+    step: 35,
     borders: {
-        translateBorders: [200, 0],
-        scrollEnterBorders: [1500, 2700],
+        translateBorders: [100, -120],
+        scrollEnterBorders: [2200, 2900],
     },
-    fromPositiveToNegative: true,
+    direction: 'bt',
 }
 
 
@@ -60,13 +61,24 @@ export const ServicesAdditionalContainer = () => {
     // refs
     const elementRef = useRef<HTMLUListElement | null>(null);
     const currentTranslateRef = useRef(translateStart);
+    // context, for custom scroll value
+    const scrollCurrentValueRef = useScrollContext();
 
-    useEffect(() => {
-        
-        const handleTransformOnScroll = (e: WheelEvent) => {
-            if (elementRef.current != null) {
-                const shouldTransform = e.deltaY > 0 && window.scrollY >= scrollStart
-                                        || e.deltaY < 0 && window.scrollY <= scrollEnd;
+	useEffect(() => {
+
+        const handleCustomScroll = (e: WheelEvent) => {
+			e.preventDefault();
+
+			// accessing custom scroll value
+			// in context 
+			if (scrollCurrentValueRef && 
+				scrollCurrentValueRef.currentScrollValue != null && 
+				scrollCurrentValueRef.currentScrollValue.current != null) {
+
+				const currentScroll = scrollCurrentValueRef.currentScrollValue.current ?? window.scrollY;
+
+				const shouldTransform = (e.deltaY > 0 && (currentScroll >= scrollStart && currentScroll <= scrollEnd)) 
+				|| (e.deltaY < 0 && (currentScroll <= scrollEnd && currentScroll >= scrollStart));
                                         
                 if (shouldTransform) {
                     transformElementOnScroll(
@@ -76,7 +88,7 @@ export const ServicesAdditionalContainer = () => {
                         {
                             step: TRANSFORMS_DATA.step,
                             borders: TRANSFORMS_DATA.borders.translateBorders,
-                            fromPositiveToNegative: TRANSFORMS_DATA.fromPositiveToNegative,
+                            direction: TRANSFORMS_DATA.direction,
                             currentValueRef: currentTranslateRef,
                         }
                     )
@@ -84,10 +96,10 @@ export const ServicesAdditionalContainer = () => {
             }
         };
 
-        document.addEventListener('wheel', handleTransformOnScroll);
+        document.addEventListener('wheel', handleCustomScroll);
 
         return () => {
-            document.removeEventListener('wheel', handleTransformOnScroll);
+            document.removeEventListener('wheel', handleCustomScroll);
         }
 
     }, []);

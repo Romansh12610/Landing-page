@@ -31,12 +31,14 @@ export const RunningLineSmall = ({ animationScrollBorders }: RunningLineSmallPro
                 translateX: {
                     step: TRANSLATE_STEP,
                     borders: TRANSLATE_BORDERS,
-                    direction: 'negToPos',
+                },
+                translateY: {
+                    step: 0,
+                    borders: [0, 0],
                 },
                 rotate: {
                     step: ROTATE_STEP,
                     borders: ROTATE_BORDERS,
-                    direction: 'posToNeg',
                 }
             }}
         >

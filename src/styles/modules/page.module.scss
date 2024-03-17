@@ -14,7 +14,7 @@
 
 .main__intro_wrapper {
     width: 100%;
-    height: var(--default-height);
+    min-height: 100vh;
 
     transition: transform var(--cubic-bezier) var(--time-1);
 }
@@ -37,6 +37,7 @@
 
 .main__section_services {
     @include flexCol;
+    gap: pxRem(80);
 
     max-width: pxRem(1600);
     padding: 0 pxRem(40);

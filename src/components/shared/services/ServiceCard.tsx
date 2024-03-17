@@ -2,8 +2,9 @@
 import type { CardAnimationData } from "@/components/containers/services/ServicesCardContainer";
 import styles from "@/styles/modules/services/card.module.scss";
 import { nextWordNewLine } from "@/utils/textFormat/nextWorkNewLine";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { transformElementOnScroll } from "@/utils/transformElementOnScroll";
+import { useScrollContext } from "@/hooks/useScrollContext";
 
 
 interface ServiceCardProps {
@@ -53,25 +54,31 @@ export const ServiceCard = ({
     const elementDOMRef = useRef<HTMLDivElement | null>(null);
     const currentTranslateRef = useRef(translateYStartBorder);
 
-    /* useLayoutEffect(() => {
-        if (currentTranslateRef.current != null) {
-            currentTranslateRef.current = translateYStartBorder;
-        }
-    }, []); */
 
+    // context, for custom scroll value
+    const scrollCurrentValueRef = useScrollContext();
 
-    // TRANSFORMATIONS on scroll
-    useEffect(() => {
-        
-        const handleScrollTransform = (e: WheelEvent) => {
-            if (elementDOMRef.current != null && typeof window !== 'undefined') {
+	useEffect(() => {
 
-                const shoudTransform = (
-                            e.deltaY > 0 && window.scrollY >= scrollStartBorder 
-                            || e.deltaY < 0 && window.scrollY <= scrollEndBorder
-                );
+        const coords = elementDOMRef?.current?.getBoundingClientRect();
+        // log
+        console.log('Additional container starts at: ', coords?.top);
 
-                if (shoudTransform) {
+        const handleCustomScroll = (e: WheelEvent) => {
+			e.preventDefault();
+
+			// accessing custom scroll value
+			// in context 
+			if (scrollCurrentValueRef && 
+				scrollCurrentValueRef.currentScrollValue != null && 
+				scrollCurrentValueRef.currentScrollValue.current != null) {
+
+				const currentScroll = scrollCurrentValueRef.currentScrollValue.current ?? window.scrollY;
+
+				const shouldTransform = (e.deltaY > 0 && (currentScroll >= scrollStartBorder && currentScroll <= scrollEndBorder)) 
+				|| (e.deltaY < 0 && (currentScroll <= scrollEndBorder && currentScroll >= scrollStartBorder));
+
+                if (shouldTransform) {
                     transformElementOnScroll(
                         e,
                         elementDOMRef,
@@ -80,7 +87,7 @@ export const ServiceCard = ({
                             currentValueRef: currentTranslateRef,
                             borders: [translateYStartBorder, translateYEndBorder],
                             step: transforms.step,
-                            fromPositiveToNegative: transforms.fromPositiveToNegative,
+                            direction: transforms.direction,
                         }
                     )
                 }
@@ -88,9 +95,9 @@ export const ServiceCard = ({
         };
 
 
-        document.addEventListener('wheel', handleScrollTransform);
+        document.addEventListener('wheel', handleCustomScroll);
 
-        return () => document.removeEventListener('wheel', handleScrollTransform);
+        return () => document.removeEventListener('wheel', handleCustomScroll);
 
     }, []);
 

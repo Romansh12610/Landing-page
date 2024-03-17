@@ -1,21 +1,44 @@
 
-export type PropertyDescription = {
+export type HorizontalDirection = 'ltr' | 'rtl';
+export type VerticalDirection = 'tb' | 'bt';
+export type RotateDirection = 'clockWise' | 'counterClockwise';
+
+export type DirectionType = HorizontalDirection | VerticalDirection | RotateDirection
+
+type GeneralPropertyDescription = {
     step: number,
     currentValueRef: React.MutableRefObject<number>,
     borders: [number, number],
-    fromPositiveToNegative: boolean; 
 };
+
+// translateX 
+type PropertyDescriptionTX = GeneralPropertyDescription & { 
+    direction: HorizontalDirection 
+};
+
+// translateY
+type PropertyDescriptionTY = GeneralPropertyDescription & {
+    direction: VerticalDirection; 
+};
+
+// rotate
+type PropertyDescriptionR = GeneralPropertyDescription & {
+    direction: RotateDirection; 
+};
+
 
 /**
  * @description this is complex function for applying multiple transforms on element
+ * @param translateX - this is description of translateX transforms on element
+ * @param translateY - this is description of translateY transforms on element
+ * @param rotate - this is description of rotate transforms on element
  */
 export const transformElementOnScroll = (
     e: WheelEvent,
     elementDomRef: React.RefObject<HTMLElement>,
-    translateX?: PropertyDescription,
-    translateY?: PropertyDescription,
-    rotate?: PropertyDescription,
-    scale?: PropertyDescription,
+    translateX?: PropertyDescriptionTX,
+    translateY?: PropertyDescriptionTY,
+    rotate?: PropertyDescriptionR,
 ) => {
     
     if (elementDomRef.current == null) return;
@@ -24,29 +47,53 @@ export const transformElementOnScroll = (
     let transformations: TransformationProps = [];
 
     // scroll bottom
-    // decrease values
     if (e.deltaY > 0) {
         // translateX
+        // from pos to neg = ++
+        // from neg to pos = --
         if (translateX) {
-            const { currentValueRef, step, borders, fromPositiveToNegative } = translateX;
+            // direction means with scroll from top to bottom perform animation
+            // on this direction
+            // with scroll from bottom to top --> invert transformation
+            const { currentValueRef, step, borders, direction } = translateX;
+
+            // log
+            /* if (borders[0] === 300) {
+                console.log('scroll down, translateX starting...');
+                console.log('current translateX is: ', currentValueRef.current);
+            } */
+
             if (currentValueRef.current == null) return;
 
-            let remainTranslateX = Math.abs(currentValueRef.current - borders[1]);
+            // make absolute value to compare to STEP, which is always POSITIVE
+            const remainTranslateX = Math.abs(currentValueRef.current - borders[1]);
             
+            // log
+            /* if (borders[0] === 300) {
+                console.log('remain translateX: ', remainTranslateX);
+            } */
+
             if (step <= remainTranslateX) {
-                // change current value
-                // - / +  default
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current - step
-                                        : currentValueRef.current + step;
-                
+                // - to +
+                if (direction === 'ltr') {
+                    currentValueRef.current += step;
+                }
+                // + to -
+                else {
+                    currentValueRef.current -= step;
+                }
             }
 
             // step > remain --> translate to END
             else {
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current - remainTranslateX
-                                        : currentValueRef.current + remainTranslateX;
+                // - to +
+                if (direction === 'ltr') {
+                    currentValueRef.current += remainTranslateX;
+                }
+                // + to -
+                else {
+                    currentValueRef.current -= remainTranslateX;
+                }
             }
 
             transformations.push({
@@ -54,27 +101,38 @@ export const transformElementOnScroll = (
                 value: currentValueRef.current,
             });
         }
+        
         // translateY
+        // from pos to neg = ++
+        // from neg to pos = --
         if (translateY) {
-            const { currentValueRef, step, borders, fromPositiveToNegative } = translateY;
+            const { currentValueRef, step, borders, direction } = translateY;
+
             if (currentValueRef.current == null) return;
 
-            let remainTranslateY = Math.abs(currentValueRef.current - borders[1]);
+            const remainTranslateY = Math.abs(currentValueRef.current - borders[1]);
             
             if (step <= remainTranslateY) {
-                // change current value
-                // - / +  default
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current - step
-                                        : currentValueRef.current + step;  
-
+                // top -> bottom === - / +
+                if (direction === 'tb') {
+                    currentValueRef.current += step;
+                }
+                // + to -
+                else {
+                    currentValueRef.current -= step;
+                }
             }
 
              // step > remain --> translate to END
              else {
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current - remainTranslateY
-                                        : currentValueRef.current + remainTranslateY;
+                // - / +  default 
+                if (direction === 'tb') {
+                    currentValueRef.current += remainTranslateY;
+                }
+                // + to -
+                else {
+                    currentValueRef.current -= remainTranslateY;
+                }
             }
 
             transformations.push({
@@ -84,57 +142,35 @@ export const transformElementOnScroll = (
         }
         // rotate
         if (rotate) {
-            const { currentValueRef, step, borders, fromPositiveToNegative } = rotate;
+            const { currentValueRef, step, borders, direction } = rotate;
             if (currentValueRef.current == null) return;
 
-            let remainRotate = Math.abs(currentValueRef.current - borders[1]);
+            const remainRotate = Math.abs(currentValueRef.current - borders[1]);
             
             if (step <= remainRotate) {
-                // change current value
                 // - / +  default
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current - step
-                                        : currentValueRef.current + step;
-                
+                // counterClockwise === - > +
+                if (direction === 'counterClockwise') {
+                    currentValueRef.current += step;
+                }
+                else {
+                    currentValueRef.current -= step;
+                }
             }
 
              // step > remain --> translate to END
              else {
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current - remainRotate
-                                        : currentValueRef.current + remainRotate;
+                // counterClockwise === - > +
+                if (direction === 'counterClockwise') {
+                    currentValueRef.current += remainRotate;
+                }
+                else {
+                    currentValueRef.current -= remainRotate;
+                }
             }
 
             transformations.push({
                 property: 'rotate',
-                value: currentValueRef.current,
-            });
-        }
-        // scale
-        if (scale) {
-            const { currentValueRef, step, borders, fromPositiveToNegative } = scale;
-            if (currentValueRef.current == null) return;
-
-            let remainScale = Math.abs(currentValueRef.current - borders[1]);
-            
-            if (step <= remainScale) {
-                // change current value
-                // - / +  default
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current - step
-                                        : currentValueRef.current + step;
-                
-            }
-
-            // step > remain --> scale to END
-            else {
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current - remainScale
-                                        : currentValueRef.current + remainScale;
-            }
-
-            transformations.push({
-                property: 'scale',
                 value: currentValueRef.current,
             });
         }
@@ -149,23 +185,32 @@ export const transformElementOnScroll = (
     else {
         // translateX
         if (translateX) {
-            const { currentValueRef, step, borders, fromPositiveToNegative } = translateX;
+            const { currentValueRef, step, borders, direction } = translateX;
             if (currentValueRef.current == null) return;
 
-            let remainTranslateX = Math.abs(currentValueRef.current - borders[0]);
+            const remainTranslateX = Math.abs(currentValueRef.current - borders[0]);
             
             if (step <= remainTranslateX) {
-                // change current value
-                // + / -  default
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current + step
-                                        : currentValueRef.current - step;
+                // + to -
+                if (direction === 'ltr') {
+                    currentValueRef.current -= step;
+                }
+                // - to +
+                else {
+                    currentValueRef.current += step;
+                }
             }
 
+            // step > remain --> translate to END
             else {
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current + remainTranslateX
-                                        : currentValueRef.current - remainTranslateX;
+                // + to -
+                if (direction === 'ltr') {
+                    currentValueRef.current -= remainTranslateX;
+                }
+                // - to +
+                else {
+                    currentValueRef.current += remainTranslateX;
+                }
             }
 
             transformations.push({
@@ -175,24 +220,32 @@ export const transformElementOnScroll = (
         }
         // translateY
         if (translateY) {
-            const { currentValueRef, step, borders, fromPositiveToNegative } = translateY;
+            const { currentValueRef, step, borders, direction } = translateY;
             if (currentValueRef.current == null) return;
 
-            let remainTranslateY = Math.abs(currentValueRef.current - borders[0]);
+            const remainTranslateY = Math.abs(currentValueRef.current - borders[0]);
                 
-
             if (step <= remainTranslateY) {
-                // change current value
-                // + / -  default
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current + step
-                                        : currentValueRef.current - step;
+                // + to -
+                if (direction === 'tb') {
+                    currentValueRef.current -= step;
+                }
+                // - to +
+                else {
+                    currentValueRef.current += step;
+                }
             }
 
-            else {
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current + remainTranslateY
-                                        : currentValueRef.current - remainTranslateY;
+             // step > remain --> translate to END
+             else {
+                // - / +  default 
+                if (direction === 'tb') {
+                    currentValueRef.current -= remainTranslateY;
+                }
+                // + to -
+                else {
+                    currentValueRef.current += remainTranslateY;
+                }
             }
 
             transformations.push({
@@ -202,54 +255,33 @@ export const transformElementOnScroll = (
         }
         // rotate
         if (rotate) {
-            const { currentValueRef, step, borders, fromPositiveToNegative } = rotate;
+            const { currentValueRef, step, borders, direction } = rotate;
             if (currentValueRef.current == null) return;
 
             let remainRotate = Math.abs(currentValueRef.current - borders[0]);
             
             if (step <= remainRotate) {
-                // change current value
-                // + / -  default
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current + step
-                                        : currentValueRef.current - step;
-                
+                // + / -
+                if (direction === 'counterClockwise') {
+                    currentValueRef.current -= step;
+                }
+                else {
+                    currentValueRef.current += step;
+                }
             }
 
-            else {
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current + remainRotate
-                                        : currentValueRef.current - remainRotate;
+             // step > remain --> translate to END
+             else {
+                if (direction === 'counterClockwise') {
+                    currentValueRef.current -= remainRotate;
+                }
+                else {
+                    currentValueRef.current += remainRotate;
+                }
             }
 
             transformations.push({
                 property: 'rotate',
-                value: currentValueRef.current,
-            });
-        }
-        // scale
-        if (scale) {
-            const { currentValueRef, step, borders, fromPositiveToNegative } = scale;
-            if (currentValueRef.current == null) return;
-
-            let remainScale = Math.abs(currentValueRef.current - borders[0]);
-            
-            if (step <= remainScale) {
-                // change current value
-                // + / -  default
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current + step
-                                        : currentValueRef.current - step;
-            }
-
-            else {
-                currentValueRef.current = fromPositiveToNegative 
-                                        ? currentValueRef.current + remainScale
-                                        : currentValueRef.current - remainScale;
-            }
-
-            transformations.push({
-                property: 'scale',
                 value: currentValueRef.current,
             });
         }
@@ -292,6 +324,9 @@ export const requestFrameHelper = (
 
     requestAnimationFrame(() => {
         if (elementRef.current == null) return;
+
+        /* console.log('RESULT transforms: ', transformationResultString); */
+
         elementRef.current.style.transform = transformationResultString;
     });
 };

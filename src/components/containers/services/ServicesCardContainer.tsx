@@ -6,11 +6,11 @@ import { TwoEllipsesSvg } from "@/components/shared/svg/services/TwoEllipsesLine
 import { RotatedLinesSvg } from "@/components/shared/svg/services/RotatedLinesSvg"; 
 import { CircleWithLineSvg } from "@/components/shared/svg/services/CircleWithLineSvg"; 
 import type { CardModeType } from "./ServicesSection";
-import type { PropertyDescription } from "@/utils/transformElementOnScroll";
-import { TupleNum2 } from "@/types/tuples";
 import { LazyMotion, domAnimation, m,  } from "framer-motion";
 import type { Variants } from "framer-motion";
 import type { ContainerAnimation } from "./ServicesSection";
+import type { TupleNum2 } from "@/types/tuples";
+import type { VerticalDirection } from "@/utils/transformElementOnScroll";
 
 // animation varints
 const containerVariants: Variants = {
@@ -32,7 +32,9 @@ const containerVariants: Variants = {
     }
 };
 
-export type CardAnimationData = Omit<PropertyDescription, 'currentValueRef' | 'borders'> & {
+export type CardAnimationData = {
+    step: number;
+    direction: VerticalDirection;
     borders: {
         translateBorders: TupleNum2;
         scrollEnterBorders: TupleNum2;
@@ -44,26 +46,26 @@ export type CardAnimationData = Omit<PropertyDescription, 'currentValueRef' | 'b
 const CARD_ANIMATION_DATA: CardAnimationData[] = [
     {
         step: 15,
-        fromPositiveToNegative: false,
+        direction: 'tb',
         borders: {
-            translateBorders: [-15, 100],
-            scrollEnterBorders: [1000, 3000],
+            translateBorders: [-15, 60],
+            scrollEnterBorders: [1000, 2700],
         },
     },
     {
-        step: 30,
-        fromPositiveToNegative: true,
+        step: 20,
+        direction: 'bt',
         borders: {
-            translateBorders: [500, 100],
-            scrollEnterBorders: [1000, 3000],
+            translateBorders: [300, 60],
+            scrollEnterBorders: [1000, 2700],
         },
     },
     {
         step: 15,
-        fromPositiveToNegative: false,
+        direction: 'tb',
         borders: {
-            translateBorders: [15, 100],
-            scrollEnterBorders: [1000, 3000],
+            translateBorders: [15, 60],
+            scrollEnterBorders: [1000, 2700],
         },
     },
 ];

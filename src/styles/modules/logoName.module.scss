@@ -5,7 +5,8 @@
 
     gap: pxRem(110);
     width: 100%;
-    height: var(--default-height);
+    min-height: 100vh;
+    // height: var(--default-height);
     position: relative;
     overflow: hidden;
 
