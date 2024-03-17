@@ -1,0 +1,12 @@
+@use 'utils' as *;
+
+.btnContainer {
+    @include flexCol(center);
+
+    width: 100%;
+    transition: transform 1.2s var(--cubic-bezier);
+
+    & button {
+        flex-grow: 1;
+    }
+}

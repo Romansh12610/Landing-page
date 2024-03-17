@@ -6,8 +6,8 @@ const TEXT = 'Место для экспертизы и творчества';
 
 // transformation values
 // running line Options
-const TRANSLATE_BORDERS: TupleNum2 = [-300, 300];
-const TRANSLATE_STEP = 50;
+const TRANSLATE_BORDERS: TupleNum2 = [-500, 500];
+const TRANSLATE_STEP = 55;
 
 const ROTATE_BORDERS: TupleNum2 = [6, -6];
 const ROTATE_STEP = 1.2;

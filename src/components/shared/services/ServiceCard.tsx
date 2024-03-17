@@ -60,10 +60,6 @@ export const ServiceCard = ({
 
 	useEffect(() => {
 
-        const coords = elementDOMRef?.current?.getBoundingClientRect();
-        // log
-        console.log('Additional container starts at: ', coords?.top);
-
         const handleCustomScroll = (e: WheelEvent) => {
 			e.preventDefault();
 

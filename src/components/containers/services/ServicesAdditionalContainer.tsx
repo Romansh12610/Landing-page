@@ -31,10 +31,10 @@ const CARD_TEXT_DATA: CardTextData[] = [
 
 // transformation props
 const TRANSFORMS_DATA: CardAnimationData = {
-    step: 35,
+    step: 55,
     borders: {
-        translateBorders: [100, -120],
-        scrollEnterBorders: [2200, 2900],
+        translateBorders: [250, -170],
+        scrollEnterBorders: [2350, 3000],
     },
     direction: 'bt',
 }
@@ -77,8 +77,7 @@ export const ServicesAdditionalContainer = () => {
 
 				const currentScroll = scrollCurrentValueRef.currentScrollValue.current ?? window.scrollY;
 
-				const shouldTransform = (e.deltaY > 0 && (currentScroll >= scrollStart && currentScroll <= scrollEnd)) 
-				|| (e.deltaY < 0 && (currentScroll <= scrollEnd && currentScroll >= scrollStart));
+				const shouldTransform = currentScroll >= scrollStart && currentScroll <= scrollEnd; 
                                         
                 if (shouldTransform) {
                     transformElementOnScroll(

@@ -12,17 +12,17 @@ type GeneralPropertyDescription = {
 };
 
 // translateX 
-type PropertyDescriptionTX = GeneralPropertyDescription & { 
+export type PropertyDescriptionTX = GeneralPropertyDescription & { 
     direction: HorizontalDirection 
 };
 
 // translateY
-type PropertyDescriptionTY = GeneralPropertyDescription & {
+export type PropertyDescriptionTY = GeneralPropertyDescription & {
     direction: VerticalDirection; 
 };
 
 // rotate
-type PropertyDescriptionR = GeneralPropertyDescription & {
+export type PropertyDescriptionR = GeneralPropertyDescription & {
     direction: RotateDirection; 
 };
 
@@ -57,21 +57,10 @@ export const transformElementOnScroll = (
             // with scroll from bottom to top --> invert transformation
             const { currentValueRef, step, borders, direction } = translateX;
 
-            // log
-            /* if (borders[0] === 300) {
-                console.log('scroll down, translateX starting...');
-                console.log('current translateX is: ', currentValueRef.current);
-            } */
-
             if (currentValueRef.current == null) return;
 
             // make absolute value to compare to STEP, which is always POSITIVE
             const remainTranslateX = Math.abs(currentValueRef.current - borders[1]);
-            
-            // log
-            /* if (borders[0] === 300) {
-                console.log('remain translateX: ', remainTranslateX);
-            } */
 
             if (step <= remainTranslateX) {
                 // - to +

@@ -45,8 +45,6 @@ export const scrollContainerElementTop = ({
         }
 
         // translateY update
-        //log
-        
         const remainTranslate = Math.abs(translateBorders[1]) - Math.abs(translateYValueRef.current);
 
         if (step <= remainTranslate) {

@@ -6,6 +6,7 @@ import { useRef, useEffect } from "react";
 import { transformElementOnScroll } from "@/utils/transformElementOnScroll";
 import type { TupleNum2 } from "@/types/tuples";
 import type { HorizontalDirection, VerticalDirection, RotateDirection } from "@/utils/transformElementOnScroll";
+import { useScrollContext } from "@/hooks/useScrollContext";
 
 // Running line
 type LineTransformOptions = {
@@ -45,6 +46,7 @@ export const RunningTextLine = ({
 	const translateXRef = useRef(transforms.translateX.borders[0]);
 	const translateYRef = useRef(transforms.translateY.borders[0]);
 	const rotateRef = useRef(transforms.rotate.borders[0]);
+	const scrollContext = useScrollContext();
 
 	// directions
 	const translateDirectionX: HorizontalDirection = transforms.translateX.borders[0] > transforms.translateX.borders[1] ? 'rtl' : 'ltr';
@@ -54,13 +56,16 @@ export const RunningTextLine = ({
 	const rotateDirection: RotateDirection = transforms.rotate.borders[0] > transforms.rotate.borders[1] ? 'clockWise' : 'counterClockwise';
 
 	useEffect(() => {
+
 		const handleScroll = (e: WheelEvent) => {
 			e.preventDefault();
 			if (lineDOMRef.current == null) return;
 
+			const currentScrollValue = scrollContext?.currentScrollValue.current;
+
+			if (currentScrollValue == null) return;
             // start end logic
-            let shouldTransform = (e.deltaY > 0 && (window.scrollY >= animationScrollBorders[0] && window.scrollY <= animationScrollBorders[1])) 
-				|| (e.deltaY < 0 && (window.scrollY <= animationScrollBorders[1] && window.scrollY >= animationScrollBorders[0]));
+            const shouldTransform = currentScrollValue >= animationScrollBorders[0] && currentScrollValue <= animationScrollBorders[1];
 			
             if (shouldTransform) {
                 // transformations

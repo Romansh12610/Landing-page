@@ -56,8 +56,7 @@ export const LogoName = () => {
 
 				const currentScroll = scrollCurrentValueRef.currentScrollValue.current ?? window.scrollY;
 
-				const shouldTransform = (e.deltaY > 0 && (currentScroll >= ELEMENT_SCROLL_BORDERS[0] && currentScroll <= ELEMENT_SCROLL_BORDERS[1])) 
-				|| (e.deltaY < 0 && (currentScroll <= ELEMENT_SCROLL_BORDERS[1] && currentScroll >= ELEMENT_SCROLL_BORDERS[0]));
+				const shouldTransform = currentScroll >= ELEMENT_SCROLL_BORDERS[0] && currentScroll <= ELEMENT_SCROLL_BORDERS[1];
 			
 				// transform element if scroll inside 'scroll window of element'
 				if (shouldTransform) {
