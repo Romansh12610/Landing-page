@@ -1,7 +1,6 @@
 import styles from "@/styles/modules/page.module.scss";
 import dynamic from "next/dynamic";
 
-import { Header } from "@/components/Header";
 import { Cursor } from "@/components/Cursor";
 import { LogoName } from "@/components/LogoName";
 import { ScrollContainer } from "@/components/containers/ScrollContainer";
@@ -13,6 +12,10 @@ import { ServicesSection } from "@/components/containers/services/ServicesSectio
 import { ButtonWrapper } from "@/components/containers/ButtonWrapper";
 import { Footer } from "@/components/Footer";
 
+
+const Header = dynamic(() => import("@/components/Header"), {
+	ssr: false,
+});
 const SvgBackground = dynamic(() => import("@/components/SvgBackground"), {
 	ssr: false,
 });

@@ -7,7 +7,7 @@
     height: pxRem(120);
     position: fixed;
     top: 0;
-    background: linear-gradient(180deg,#14161F -124.12%,rgba(20,22,31,0) 100%);
+    background: linear-gradient(180deg,#14161F -124.12%,#14161f00 100%);
     padding: pxRem(35);
     z-index: 2;
     
@@ -29,6 +29,13 @@
         right: 0;
         backdrop-filter: blur(6px);
         z-index: 0;
+    }
+
+     // viewport < 1200
+     &[data-desktop=false] {
+        @include flexRow(space-between, center);
+        height: pxRem(68);
+        padding: pxRem(0) pxRem(16);
     }
 }
 

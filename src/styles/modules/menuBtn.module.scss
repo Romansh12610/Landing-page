@@ -1,0 +1,77 @@
+@use 'utils' as *;
+
+
+.menuBtn__container {
+    @include flexCol(center, center, pxRem(6));
+    
+    z-index: 99;
+
+    min-width: pxRem(30);
+    min-height: pxRem(30);
+
+    & > div {
+        background-color: var(--color-primary);
+        /* mix-blend-mode: difference; */
+        height: 3px;
+        width: 100%;
+
+        &:nth-child(1), &:nth-child(3) {
+            transform-origin: left;
+        }
+        // first stripe
+        &:nth-child(1) {
+            transition: transform 0.25s ease-in-out;
+        }
+
+
+        &:nth-child(2) {
+            transition: opacity 0.2s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        // third stripe
+        &:nth-child(3) {
+            transition: transform 0.5s ease-in-out;
+        }
+    }
+
+    // CLOSED mode
+    &[data-open=false] {
+        & > div {
+            &:nth-child(1) {
+                transform: rotate(0);
+            }
+    
+    
+            &:nth-child(2) {
+                transform: scale(1);
+                opacity: 1;
+            }
+    
+            // third stripe
+            &:nth-child(3) {
+                transform: rotate(0);
+            }
+        }
+    }
+
+    // OPEN mode
+    &[data-open=true] {
+        & > div {
+            &:nth-child(1) {
+                transform: rotate(38deg);
+            }
+    
+    
+            &:nth-child(2) {
+                transform: scale(0);
+                opacity: 0;
+            }
+    
+            // third stripe
+            &:nth-child(3) {
+                transform: rotate(-38deg);
+            }
+        }
+    }
+}
+

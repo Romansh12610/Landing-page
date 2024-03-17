@@ -45,18 +45,18 @@ export type CardAnimationData = {
 // index 0 - first card data, 1 - second, ...
 const CARD_ANIMATION_DATA: CardAnimationData[] = [
     {
-        step: 24,
+        step: 28,
         direction: 'tb',
         borders: {
-            translateBorders: [-45, 120],
+            translateBorders: [-45, 150],
             scrollEnterBorders: [1200, 2500],
         },
     },
     {
-        step: 34,
+        step: 35,
         direction: 'bt',
         borders: {
-            translateBorders: [450, 120],
+            translateBorders: [450, 150],
             scrollEnterBorders: [1200, 2500],
         },
     },
@@ -64,7 +64,7 @@ const CARD_ANIMATION_DATA: CardAnimationData[] = [
         step: 24,
         direction: 'tb',
         borders: {
-            translateBorders: [-10, 120],
+            translateBorders: [-10, 150],
             scrollEnterBorders: [1200, 2500],
         },
     },
