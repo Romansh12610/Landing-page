@@ -3,11 +3,20 @@
 .services__wrapper {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: pxRem(32);
     place-content: start;
 
     & > h2 {
         @include fontLargeUppercased;
+
+        @include breakpointDown(1200) {
+            font-size: pxRem(52);
+        }
+    }
+    
+    @include breakpointUp(768) {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -16,4 +25,12 @@
     gap: pxRem(40);
 
     padding: pxRem(20) pxRem(20) 0 pxRem(40);
+
+    @include breakpointDown(1200) {
+        gap: pxRem(18);
+    }
+    
+    @include breakpointDown(768) {
+        padding-left: 0;
+    }
 }

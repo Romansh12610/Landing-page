@@ -3,9 +3,10 @@
 import { ServiceSmallCard } from "@/components/shared/services/ServiceSmallCard";
 import styles from "@/styles/modules/services/additionalContainer.module.scss";
 import { transformElementOnScroll } from "@/utils/transformElementOnScroll";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CardAnimationData } from "./ServicesCardContainer";
 import { useScrollContext } from "@/hooks/useScrollContext";
+import { TimerType } from "@/types/timerType";
 
 // text data
 interface CardTextData {
@@ -40,7 +41,52 @@ const TRANSFORMS_DATA: CardAnimationData = {
 }
 
 
+const SVG_SIZES = {
+    small: 16,
+    big: 24,
+    breakPoint: 1199,
+}
+
+export type SvgSizeType = 'small' | 'big';
+
 export const ServicesAdditionalContainer = () => {
+    
+    // size of the svg manipulation
+    // if < 1200 small, else big
+    const [svgSizeMode, setSvgSizeMode] = useState<SvgSizeType>('small');
+    const resizeTimerRef = useRef<TimerType | null>(null);
+    
+    useEffect(() => {
+        
+        const handleSvgSize = () => {
+            if (resizeTimerRef != null && typeof document !== 'undefined') {
+                if (resizeTimerRef.current) {
+                    clearTimeout(resizeTimerRef.current);
+                    resizeTimerRef.current = null;
+                }
+                
+                resizeTimerRef.current = setTimeout(() => {
+                    const currentVPWidth = document.documentElement.clientWidth;
+
+                    // small
+                    if (currentVPWidth < SVG_SIZES.breakPoint) {
+                        setSvgSizeMode('small');
+                    }
+
+                    else {
+                        setSvgSizeMode('big');
+                    }
+
+                }, 100);
+            }
+        };
+
+
+        window.addEventListener('resize', handleSvgSize);
+
+        return () => window.removeEventListener('resize', handleSvgSize);
+
+    }, []);
 
     const renderingCards = CARD_TEXT_DATA.map(textData => {
         return (
@@ -48,6 +94,7 @@ export const ServicesAdditionalContainer = () => {
                 <ServiceSmallCard 
                     title={textData.title}
                     description={textData.description}
+                    svgSize={svgSizeMode}
                 />
             </li>
         )
@@ -62,7 +109,7 @@ export const ServicesAdditionalContainer = () => {
     const elementRef = useRef<HTMLUListElement | null>(null);
     const currentTranslateRef = useRef(translateStart);
     // context, for custom scroll value
-    const scrollCurrentValueRef = useScrollContext();
+    const scrollContext = useScrollContext();
 
 	useEffect(() => {
 
@@ -71,11 +118,15 @@ export const ServicesAdditionalContainer = () => {
 
 			// accessing custom scroll value
 			// in context 
-			if (scrollCurrentValueRef && 
-				scrollCurrentValueRef.currentScrollValue != null && 
-				scrollCurrentValueRef.currentScrollValue.current != null) {
+			if (scrollContext && 
+				scrollContext.currentScrollValue != null && 
+				scrollContext.currentScrollValue.current != null) {
 
-				const currentScroll = scrollCurrentValueRef.currentScrollValue.current ?? window.scrollY;
+                // viewport < 1200 --> cant scroll children 
+                const { canScrollChildren } = scrollContext;
+                if (!canScrollChildren) return;
+
+				const currentScroll = scrollContext.currentScrollValue.current ?? window.scrollY;
 
 				const shouldTransform = currentScroll >= scrollStart && currentScroll <= scrollEnd; 
                                         
@@ -101,7 +152,7 @@ export const ServicesAdditionalContainer = () => {
             document.removeEventListener('wheel', handleCustomScroll);
         }
 
-    }, []);
+    }, [scrollContext]);
 
 
     return (

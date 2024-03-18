@@ -126,6 +126,19 @@
         height: fit-content;
         overflow: hidden;
 
+        @include breakpointDown(768) {
+            justify-content: flex-start;
+            align-items: flex-start;
+            max-width: 92vw;
+            font-size: pxRem(52);
+
+            & > span {
+                text-align: left;
+                white-space: normal;
+                min-height: 100px;
+            }
+        }
+
         & span {
             transition: transform 600ms var(--cubic-bezier);
             //temp
@@ -139,8 +152,12 @@
                 z-index: 3;
                 position: absolute;
                 transform-origin: left;
+                transform: rotate(30deg) translateY(110px);
                 
-                transform: rotate(30deg) translateY(80px);
+                @include breakpointUp(768) {
+                    transform: rotate(30deg) translateY(80px);
+                }
+
                 @include breakpointUp(1200) {
                     transform: rotate(30deg) translateY(170px);
                 }
@@ -161,6 +178,10 @@
                 transform: rotate(0deg) translateY(0);
                 // UNDERLINE
                 text-decoration: 8px underline solid var(--color-dark);
+
+                @include breakpointDown(768) {
+                    text-decoration-thickness: 3.5px;
+                }
             }
 
             &::before {

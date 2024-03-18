@@ -2,9 +2,26 @@
 
 .services__add_container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0 pxRem(40);
-
-    margin: pxRem(80) 0;
+    // mobile view
+    width: 90vw;
+    gap: pxRem(40) 0;
+    grid-template-columns: repeat(1, 1fr);
+    justify-content: center;
+    
+    margin: 0;
     transition: transform 1.2s var(--cubic-bezier);
+    
+    @include breakpointDown(768) {
+        grid-template-rows: repeat(3, auto);
+        max-width: pxRem(480);
+    }
+
+    @include breakpointUp(768) {
+        width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-flow: column;
+        gap: 0 pxRem(40);
+        
+        margin-bottom: pxRem(80);
+    }
 }

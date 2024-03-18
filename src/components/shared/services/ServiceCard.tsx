@@ -2,9 +2,11 @@
 import type { CardAnimationData } from "@/components/containers/services/ServicesCardContainer";
 import styles from "@/styles/modules/services/card.module.scss";
 import { nextWordNewLine } from "@/utils/textFormat/nextWorkNewLine";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { transformElementOnScroll } from "@/utils/transformElementOnScroll";
 import { useScrollContext } from "@/hooks/useScrollContext";
+import { TimerType } from "@/types/timerType";
+import { ScrollContextInt } from "@/types/scrollContextInt";
 
 
 interface ServiceCardProps {
@@ -56,7 +58,8 @@ export const ServiceCard = ({
 
 
     // context, for custom scroll value
-    const scrollCurrentValueRef = useScrollContext();
+    // cant translate on < 1200 viewport
+    const scrollContext = useScrollContext() as ScrollContextInt;
 
 	useEffect(() => {
 
@@ -65,11 +68,15 @@ export const ServiceCard = ({
 
 			// accessing custom scroll value
 			// in context 
-			if (scrollCurrentValueRef && 
-				scrollCurrentValueRef.currentScrollValue != null && 
-				scrollCurrentValueRef.currentScrollValue.current != null) {
+			if (scrollContext && 
+				scrollContext.currentScrollValue != null && 
+				scrollContext.currentScrollValue.current != null) {
+                    
+                // viewport < 1200 --> cant scroll children 
+                const { canScrollChildren } = scrollContext;
+                if (!canScrollChildren) return;
 
-				const currentScroll = scrollCurrentValueRef.currentScrollValue.current ?? window.scrollY;
+				const currentScroll = scrollContext.currentScrollValue.current ?? window.scrollY;
 
 				const shouldTransform = (e.deltaY > 0 && (currentScroll >= scrollStartBorder && currentScroll <= scrollEndBorder)) 
 				|| (e.deltaY < 0 && (currentScroll <= scrollEndBorder && currentScroll >= scrollStartBorder));
@@ -94,6 +101,39 @@ export const ServiceCard = ({
         document.addEventListener('wheel', handleCustomScroll);
 
         return () => document.removeEventListener('wheel', handleCustomScroll);
+
+    }, [scrollContext]);
+
+
+    // hider list --> render only on desktop
+    const [shouldRenderHideList, setShouldRenderHideList] = useState(false);
+    const resizeTimerRef = useRef<TimerType | null>(null);
+
+    useEffect(() => {
+
+        const handleResize = () => {
+            if (typeof document !== 'undefined') {
+                if (resizeTimerRef.current) {
+                    clearTimeout(resizeTimerRef.current);
+                    resizeTimerRef.current = null;
+                }
+    
+                resizeTimerRef.current = setTimeout(() => {
+                    const currentVPWidth = document.documentElement.clientWidth;
+                    if (currentVPWidth < 1200) {
+                        setShouldRenderHideList(false);
+                    }
+                    else {
+                        setShouldRenderHideList(true);
+                    }
+                }, 100);
+            }
+        };  
+
+
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
 
     }, []);
 
@@ -121,11 +161,13 @@ export const ServiceCard = ({
 
 			{/* List of options */}
 			<ul className={styles.card__option_list}>
-                <div className={styles.card__hider_list}>
-                    <div className={styles.card__hider_ellipsis}>
-                        <span>...</span>
+                {shouldRenderHideList && (
+                    <div className={styles.card__hider_list}>
+                        <div className={styles.card__hider_ellipsis}>
+                            <span>...</span>
+                        </div>
                     </div>
-                </div>
+                )}
                 {renderingOptions}
             </ul>
 		</div>

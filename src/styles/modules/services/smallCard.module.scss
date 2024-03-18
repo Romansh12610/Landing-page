@@ -3,21 +3,28 @@
 .card__wrapper {
     @include flexCol;
 
-    gap: pxRem(40);
     position: relative;
     width: 100%;
-    min-height: pxRem(200);
-    padding-bottom: pxRem(40);
     border-bottom: 2px solid var(--color-primary);
     transition: border-color 0.6s var(--cubic-bezier);
+
+    // breakpoints
+    @include breakpointUp(768) {
+        height: calc(130px + 2.5vw);
+    }
+
+    @include breakpointUp(1200) {
+        min-height: pxRem(200);
+        padding-bottom: pxRem(40); 
+    }
 
 
     & > svg {
         transition: fill 0.6s var(--cubic-bezier);
         fill: var(--color-primary);
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 0;
+        right: 0;
     }
 
     // hover state
@@ -38,11 +45,24 @@
     @include fontMedium;
 
     color: var(--color-primary);
-    transition: color 0.6s var(--cubic-bezier); 
+    transition: color 0.6s var(--cubic-bezier);
+    margin-bottom: pxRem(40);
+    font-weight: 600;
+
+    @include breakpointDown(1200) {
+        font-size: pxRem(22);
+        margin-bottom: pxRem(20);
+    }
 }
 
 .card__description {
     @include fontDescription;
 
     transition: color 0.6s var(--cubic-bezier);
+    margin-bottom: pxRem(36);
+
+    @include breakpointDown(1200) {
+        font-size: pxRem(15);
+        margin-bottom: pxRem(40);
+    }
 }

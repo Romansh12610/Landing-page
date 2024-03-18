@@ -10,7 +10,7 @@ export type ContainerAnimation = 'enter' | 'exit';
 
 export const ServicesSection = () => {
 
-    const [servicesMode, setServicesMode] = useState<CardModeType>('territory');
+    const [servicesMode, setServicesMode] = useState<CardModeType>('business');
 
     // animation state
     const [containerAnimationState, setContainerAnimationState] = useState<ContainerAnimation>('enter');

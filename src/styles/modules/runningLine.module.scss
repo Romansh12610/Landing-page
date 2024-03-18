@@ -34,6 +34,10 @@
         color: var(--color-dark);
 
         align-self: flex-end;
+
+        @include breakpointDown(768) {
+            font-size: pxRem(36);
+        }
     }   
 }
 
@@ -42,7 +46,6 @@
     @include flexRow(flex-start, center);
     gap: pxRem(40);
     height: pxRem(54);
-
 
     & > span {
         @include fontMedium;

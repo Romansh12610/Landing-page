@@ -32,7 +32,7 @@
 @mixin fontMedium {
     font-size: pxRem(29);
     line-height: 1;
-    letter-spacing: -0.06em;
+    letter-spacing: -0.02em;
     color: var(--color-dark);
 }
 
@@ -60,7 +60,7 @@
 
 @mixin fontDescription {
     font-weight: 400;
-    font-size: pxRem(16);
+    font-size: pxRem(18);
     line-height: 1.4;
     letter-spacing: -0.04em;
 }

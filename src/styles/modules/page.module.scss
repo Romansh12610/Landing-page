@@ -2,7 +2,7 @@
 
 .main {
     @include flexCol(center);
-    
+
     width: 100%;
 }
 
@@ -26,20 +26,35 @@
 
     height: pxRem(512);
     padding: pxRem(154) pxRem(38) 0;
+
+    @include breakpointDown(768) {
+        font-size: pxRem(36);
+        padding: pxRem(68) pxRem(48) 0;
+    }
 }
 
 
 .main__running_line_wrapper_middle {
-    @include flexCol(center, center);
+    @include flexCol(center, flex-start);
 
-    height: pxRem(450);
+    height: pxRem(180);
+
+    @include breakpointUp(768) {
+        justify-content: center;
+        height: pxRem(450);
+    }
 }
 
 .main__section_services {
-    @include flexCol;
+    @include flexCol(center);
     gap: pxRem(80);
 
     max-width: pxRem(1600);
-    padding: 0 pxRem(40);
+    padding: 0 pxRem(16);
     width: 100%;
+
+    @include breakpointUp(1200) {
+        gap: pxRem(80);
+        padding: 0 pxRem(40);
+    }
 }

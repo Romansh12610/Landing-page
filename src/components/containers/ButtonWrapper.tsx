@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LargeBtnGradient } from "../LargeBtnGradient";
 import { BtnWithTextCopy } from "../shared/BtnWithTextCopy";
 import { useScrollContext } from "@/hooks/useScrollContext";
 import styles from "@/styles/modules/btnContainer.module.scss";
 import { PropertyDescriptionTY, transformElementOnScroll } from "@/utils/transformElementOnScroll";
 import { TupleNum2 } from "@/types/tuples";
+import { TimerType } from "@/types/timerType";
 
 
 type TransformsType = Omit<PropertyDescriptionTY, 'currentValueRef' | 'borders'> & {
@@ -34,15 +35,17 @@ export const ButtonWrapper = () => {
 
     // scroll
     useEffect(() => {
-        
-        //log
-        const coords = elemendDOMRef.current?.getBoundingClientRect();
-        console.log('button wrapper starts on: ', coords?.top);
 
         const handleCustomScroll = (e: WheelEvent) => {
             e.preventDefault();
 
-            const currentScrollValue = scrollContext?.currentScrollValue.current;
+            if (!scrollContext) return;
+
+            const currentScrollValue = scrollContext.currentScrollValue.current;
+
+             // viewport < 1200 --> cant scroll children 
+            const { canScrollChildren } = scrollContext;
+            if (!canScrollChildren) return;
 
             if (elemendDOMRef.current != null && currentScrollValue != null) {
                 // borders destructuring
@@ -70,7 +73,7 @@ export const ButtonWrapper = () => {
 
         return () => document.removeEventListener('wheel', handleCustomScroll);
         
-    }, []);
+    }, [scrollContext]);
 
     return (
         <div className={styles.btnContainer}

@@ -52,6 +52,12 @@
     &[data-selected=true] {
         @include tabSelected;
     }
+
+
+    // breakpoints
+    @include breakpointDown(1200) {
+        font-size: pxRem(35);
+    }
 }
 
 // number in circle

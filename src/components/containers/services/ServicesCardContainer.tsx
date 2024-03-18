@@ -11,6 +11,8 @@ import type { Variants } from "framer-motion";
 import type { ContainerAnimation } from "./ServicesSection";
 import type { TupleNum2 } from "@/types/tuples";
 import type { VerticalDirection } from "@/utils/transformElementOnScroll";
+import { useScrollContext } from "@/hooks/useScrollContext";
+import { ScrollContextInt } from "@/types/scrollContextInt";
 
 // animation varints
 const containerVariants: Variants = {
@@ -196,7 +198,7 @@ interface CardContainerProps {
 }
 
 export const ServicesCardContainer = ({ servicesMode, animationState }: CardContainerProps) => {
-	// big-cards
+
 	const renderingCards = CARD_TEXT_DATA[servicesMode].map(
 		({ title, subtitle, description, options, renderSvg, transforms }) => {
 			return (
@@ -212,9 +214,6 @@ export const ServicesCardContainer = ({ servicesMode, animationState }: CardCont
 			);
 		}
 	);
-
-	// mini-cards
-	// const renderingOptions
 
 	return (
         <LazyMotion features={domAnimation}>

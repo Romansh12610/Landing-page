@@ -6,6 +6,17 @@ $cardGap: 40;
     @include flexCol;
 
     transition: transform 1.2s var(--cubic-bezier), opacity 1s var(--cubic-bezier);
+    & > svg {
+        transform: translateY(0);
+    }
+
+    // on mobile always small svg
+    @include breakpointUp(768) {
+        & > svg {
+            transform: translateY(-20px) scale(0.6);
+        }
+    }
+
 
     // hover state on parent
     &:hover {
@@ -16,37 +27,51 @@ $cardGap: 40;
         // title
         & .card__titleSvg_wrapper {
             border-color: var(--color-bright);
-            padding-top: pxRem(60);
-            gap: 0;
+
+            @include breakpointUp(1200) {
+                padding-top: pxRem(60);
+                gap: 0;
+            }
         }
 
         // svg
         & svg {
             stroke: var(--color-bright);
-            transform: translateY(-20px) scale(0.4);
+
+            @include breakpointUp(1200) {
+                transform: translateY(-20px) scale(0.4);
+            }
         }
 
         // subtitle if presented
         &[data-has-subtitle=true] {
             & .card__subtitle {
-                transform: translateY(-50px);
+                @include breakpointUp(1200) {
+                    transform: translateY(-50px);
+                }
             }
         }
 
         // description
         & .card__description {
-            transform: translateY(-50px);
+            @include breakpointUp(1200) {
+                transform: translateY(-50px);
+            }
         }
 
         // list
         & .card__option_list {
-            transform: translateY(-50px);
+            @include breakpointUp(1200) {
+                transform: translateY(-50px);
+            }
 
-            & .card__hider_list {
-                transform: translateY(100%);
-                
-                & .card__hider_ellipsis {
-                    opacity: 0;
+            @include breakpointUp(1200) {
+                & .card__hider_list {
+                    transform: translateY(100%);
+                    
+                    & .card__hider_ellipsis {
+                        opacity: 0;
+                    }
                 }
             }
         }
@@ -58,29 +83,40 @@ $cardGap: 40;
 }
 
 .card__titleSvg_wrapper {
-    @include flexCol(center, flex-start, pxRem(40));
+    @include flexCol(center, space-between);
 
     border: 2px solid var(--color-primary);
     border-bottom: none;
-    padding: pxRem(40) pxRem(20) 0;
     color: var(--color-primary);
-    height: fit-content;
+    height: pxRem(210);
     width: 100%;
-
     will-change: padding, gap, transform;
     transition: border 0.6s var(--cubic-bezier), padding 0.6s var(--cubic-bezier), gap 0.6s var(--cubic-bezier);
     transform-origin: center top;
     z-index: 0;
+    padding-top: pxRem(20);
+    
+    @include breakpointUp(1200) {
+        gap: pxRem(40);
+        align-items: flex-start;
+        height: fit-content;
+        padding: pxRem(40) pxRem(20) 0;
+    }
 
     // title
     & > h3 {
         @include fontH3;
         @include flexCol(center, center);
         text-align: center;
+        width: 100%;
 
         & > .card__title_span {
             white-space: nowrap;
         } 
+
+        @include breakpointDown(768) {
+            font-size: pxRem(33);
+        }
     }
 
 
@@ -89,7 +125,15 @@ $cardGap: 40;
         transition: transform 0.5s var(--cubic-bezier), stroke 0.5s var(--cubic-bezier);
         stroke: var(--color-primary);
 
-        transform: scale(0.85);
+        transform: scale(0.8) translateY(15px);
+
+        @include breakpointUp(768) {
+            transform: scale(0.6);
+        }
+        
+        @include breakpointUp(1200) {
+            transform: scale(0.85);
+        }
     }
 }
 
@@ -105,9 +149,12 @@ $cardGap: 40;
 
     z-index: 3;
     border: 5px solid var(--color-dark);
-    padding-top: pxRem(40);
-
-    margin-bottom: pxRem($cardGap);
+    margin: pxRem(35) 0 pxRem(20);
+    
+    @include breakpointUp(1200) {
+        margin-top: pxRem(40);
+        margin-bottom: pxRem($cardGap);
+    }
 }
 
 
@@ -126,7 +173,12 @@ $cardGap: 40;
         padding-top: pxRem(40);
     }
 
-    margin-bottom: pxRem($cardGap);
+    margin-bottom: pxRem(38);
+    
+    @include breakpointDown(768) {
+        margin-bottom: pxRem($cardGap);
+        font-size: pxRem(15);
+    }
 }
 
 
@@ -134,43 +186,52 @@ $listOptionHeight: 40;
 $listGapHeight: 10;
 
 .card__option_list {
-    @include flexCol;
-    gap: pxRem($listGapHeight);
+    @include flexRow(flex-start, center);
 
     transition: transform 0.6s var(--cubic-bezier);
     position: relative;
 
-    // pseudo element 2 options down from top
-    $pseudoTopPosition: calc($listOptionHeight * 2 + $listGapHeight) + 10; // 10 = small offset
+    width: 100%;
+    flex-wrap: wrap;
+    gap: pxRem($listGapHeight);
+    
+    // list hider only desktop
+    @include breakpointUp(1200) {
+        grid-template-columns: 1fr;
+        gap: pxRem($listGapHeight);
 
-    & > .card__hider_list {
-        position: absolute;
-        top: #{$pseudoTopPosition}px;
-        left: 0;
-        width: 100%;
-        height: calc(100% - pxRem($pseudoTopPosition));
-        background-color: var(--color-dark);
-        z-index: 10;
-        transition: transform 0.6s var(--cubic-bezier);
+        // pseudo element 2 options down from top
+        $pseudoTopPosition: calc($listOptionHeight * 2 + $listGapHeight) + 10; // 10 = small offset
 
-        & > .card__hider_ellipsis {
-
-            text-align: center;
-            font-size: pxRem(27);
-            width: pxRem(44);
-            height: pxRem(30);
-            border: 2px solid var(--color-primary);
-            border-radius: pxRem(47);
-            opacity: 1;
+        & > .card__hider_list {
+            position: absolute;
+            top: #{$pseudoTopPosition}px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - pxRem($pseudoTopPosition));
+            background-color: var(--color-dark);
             z-index: 10;
-            position: relative;
+            transition: transform 0.6s var(--cubic-bezier);
 
-            transition: opacity 0.6s var(--cubic-bezier);
+            & > .card__hider_ellipsis {
 
-            & > span {
-                position: absolute;
-                top: -11px;
-                left: 8px;
+                text-align: center;
+                font-size: pxRem(27);
+                width: pxRem(44);
+                height: pxRem(30);
+                border: 2px solid var(--color-primary);
+                border-radius: pxRem(47);
+                opacity: 1;
+                z-index: 10;
+                position: relative;
+
+                transition: opacity 0.6s var(--cubic-bezier);
+
+                & > span {
+                    position: absolute;
+                    top: -11px;
+                    left: 8px;
+                }
             }
         }
     }
@@ -178,6 +239,8 @@ $listGapHeight: 10;
 
 
 .card__list_option {
+    @include flexCol(center, center);
+
     width: fit-content;
     height: pxRem($listOptionHeight);
     border: 2px solid var(--color-primary);
@@ -195,5 +258,15 @@ $listGapHeight: 10;
         letter-spacing: -0.06em;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+
+    @include breakpointDown(768) {
+        padding: pxRem(5) pxRem(12);
+        height: auto;
+        
+        & > p {
+            font-size: pxRem(15);
+            line-height: 1.1;
+        }
     }
 }

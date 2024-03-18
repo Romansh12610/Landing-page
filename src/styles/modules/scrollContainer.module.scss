@@ -6,7 +6,7 @@
     left: 0;
     width: 100%;
 
-    height: var(--scroll-height);
+    min-height: var(--scroll-height);
 
     transition: transform var(--time-1) var(--cubic-bezier);
 }

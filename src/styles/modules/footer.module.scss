@@ -10,6 +10,9 @@
     padding: pxRem(125) pxRem(40);
     position: relative;
 
+    @include breakpointDown(1200) {
+        margin-top: 0;
+    }
 
     // large btn 
     & button {

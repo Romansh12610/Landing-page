@@ -3,7 +3,17 @@
 
 .services__card_container {
     display: grid;
-    grid-template-columns: repeat(3, minmax(350px,480px));
     justify-content: center;
-    gap: 0 pxRem(40);
+    width: 100%;
+    gap: pxRem(40);
+    grid-template-columns: repeat(1, minmax(pxRem(350), pxRem(480)));
+
+    @include breakpointUp(768) {
+        gap: 40px;
+        grid-template-columns: repeat(2, minmax(pxRem(350), pxRem(480)));
+    }
+
+    @include breakpointUp(1140) {
+        grid-template-columns: repeat(3, minmax(pxRem(350), pxRem(480)));
+    }
 }
