@@ -1,0 +1,38 @@
+@use 'utils' as *;
+
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    opacity: 0;
+    z-index: 5;
+    background-color: var(--color-dark);
+
+
+    & > nav {
+        z-index: 99;
+        padding: pxRem(132) pxRem(16) pxRem(40);
+    }
+
+
+    & ul {
+        @include flexCol;
+
+        gap: pxRem(40);
+    }
+
+    & li, div {
+        min-height: pxRem(43);
+    }
+
+    & span {
+        font-size: pxRem(38);
+        font-weight: 500;
+        line-height: 1;
+        color: var(--color-primary);
+    }
+}

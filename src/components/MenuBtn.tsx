@@ -1,14 +1,19 @@
 'use client';
 import styles from "@/styles/modules/menuBtn.module.scss";
 import { useState } from "react";
-
+import { useBackdropContext } from "@/hooks/useBackdropContext";
 
 export const MenuBtn = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    // using backdrop context
+    const backdropContext = useBackdropContext();
 
     const handleBtnClick = () => {
-        setIsMenuOpen(!isMenuOpen);
+        if (backdropContext != null) {
+            setIsMenuOpen(!isMenuOpen);
+            backdropContext.toggleBackdrop();
+        }
     };
 
     return (

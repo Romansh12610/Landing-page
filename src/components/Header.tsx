@@ -77,8 +77,6 @@ const Header = () => {
             data-desktop={shouldRenderNav}
         >
             <LogotypeSvg 
-                width={103} 
-                height={24}
                 fill={COLORS[0]}
                 shouldScaleCursor={true} 
             />

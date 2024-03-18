@@ -3,16 +3,29 @@
 .logo__wrapper {
     @include flexCol(center);
 
-    gap: pxRem(110);
     width: 100%;
     min-height: 100vh;
     // height: var(--default-height);
     position: relative;
     overflow: hidden;
-
+    
     transition: transform var(--time-1) var(--cubic-bezier);
-    transform: translateY(400px);
+    transform: translateY(500px);
     will-change: transform;
+    
+    gap: pxRem(60);
+
+    @include breakpointUp(768) {
+        gap: clamp(pxRem(80), calc(pxRem(80) + 2.5vw), pxRem(100));
+    }
+
+    @include breakpointUp(1200) {
+        gap: clamp(pxRem(100), calc(pxRem(100) + 2.5vw), pxRem(135));
+    }
+
+    @include breakpointUp(1400) {
+        gap: clamp(pxRem(125), calc(pxRem(125) + 2.5vw), pxRem(180));
+    }
 }
 
 .logo__heading {

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, createContext } from "react";
 import { scrollContainerElementTop } from "@/utils/scrollContainerElementTop";
 import { TupleNum2 } from "@/types/tuples";
 import { ScrollContext } from "@/hooks/useScrollContext";
+import { useBackdropContext } from "@/hooks/useBackdropContext";
 
 interface ScrollContainerProps {
     children: React.ReactNode;
@@ -50,6 +51,7 @@ export const ScrollContainer = ({ children }: ScrollContainerProps) => {
         isTranslateEndSettled: false,
     });
 
+
     // get actual SCROLL_END border
     useEffect(() => {
         // if settled, no need to reset
@@ -73,6 +75,9 @@ export const ScrollContainer = ({ children }: ScrollContainerProps) => {
         }
     }, []);
 
+    // getting context of backdrop
+    // to prevent scroll when it is open
+    const backdropContext = useBackdropContext();
     // disable default scroll
     // add custom scroll
     useEffect(() => {
@@ -84,16 +89,17 @@ export const ScrollContainer = ({ children }: ScrollContainerProps) => {
             if (scrollBordersState.isScrollEndSettled === false || translateBordersState.isTranslateEndSettled === false) return;
 
             // if does not have refs
-            if (scrollValueRef.current == null || translateValueRef.current == null) return;
+            if (scrollValueRef.current == null || translateValueRef.current == null || backdropContext == null) return;
 
             const currentScrollValue = scrollValueRef.current;
-
+            const { isBackdropOpen } = backdropContext;
             // log
+            console.log('is backdrop open: ', isBackdropOpen);
             console.log('custom scroll now: ', currentScrollValue);
 
             // should transform and scroll?
-            const shouldScrollAndTransform = (e.deltaY > 0 && (currentScrollValue >= scrollBordersState.borders[0] && currentScrollValue <= scrollBordersState.borders[1]) 
-				|| (e.deltaY < 0 && (currentScrollValue <= scrollBordersState.borders[1] && currentScrollValue >= scrollBordersState.borders[0])));
+            // backdrop needs to be closed
+            const shouldScrollAndTransform = (currentScrollValue >= scrollBordersState.borders[0] && currentScrollValue <= scrollBordersState.borders[1]) && isBackdropOpen == false;
 
 			// transform element if scroll inside 'scroll window of element'
             if (shouldScrollAndTransform) {
@@ -116,7 +122,7 @@ export const ScrollContainer = ({ children }: ScrollContainerProps) => {
             document.removeEventListener('wheel', handleCustomScroll);
         }
 
-    }, [scrollBordersState, translateBordersState]);
+    }, [scrollBordersState, translateBordersState, backdropContext]);
 
     return (
         <div className={styles.scrollContainer}

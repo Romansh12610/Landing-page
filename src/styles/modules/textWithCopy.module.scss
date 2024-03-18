@@ -17,13 +17,13 @@
         &:nth-child(2) {
             position: absolute;
             transform-origin: left;
-            transform: rotate(30deg) translateY(20px);
+            transform: rotate(30deg) translateY(30px);
         }
     }
 
     &:hover {
         > span:nth-child(1) {
-            transform: rotate(30deg) translateY(-25px);
+            transform: rotate(30deg) translateY(-35px);
         }
 
         > span:nth-child(2) {

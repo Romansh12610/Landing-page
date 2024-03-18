@@ -1,6 +1,4 @@
 interface LogotypeSvgProps {
-    width: number;
-    height: number;
     shouldScaleCursor: boolean;
     fill: string;
     isBig?: boolean;
@@ -8,13 +6,13 @@ interface LogotypeSvgProps {
     scaleY?: number;
 }
 
-export const LogotypeSvg = ({ width, height, shouldScaleCursor, fill, isBig = false, scaleX = 1, scaleY = 1 }: LogotypeSvgProps) => {
+export const LogotypeSvg = ({ shouldScaleCursor, fill, isBig = false, scaleX = 1, scaleY = 1 }: LogotypeSvgProps) => {
 
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width={width}
-            height={height}
+            width={103}
+            height={24}
             transform={`scale(${scaleX} ${scaleY})`}
 
             fill={fill}
