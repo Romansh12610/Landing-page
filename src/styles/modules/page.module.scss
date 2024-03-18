@@ -40,8 +40,8 @@
     height: pxRem(180);
 
     @include breakpointUp(768) {
-        justify-content: center;
-        height: pxRem(450);
+        height: pxRem(300);
+        padding-top: pxRem(80);
     }
 }
 

@@ -32,10 +32,10 @@ const CARD_TEXT_DATA: CardTextData[] = [
 
 // transformation props
 const TRANSFORMS_DATA: CardAnimationData = {
-    step: 55,
+    step: 43,
     borders: {
-        translateBorders: [250, -170],
-        scrollEnterBorders: [2350, 3000],
+        translateBorders: [350, 110],
+        scrollEnterBorders: [2300, 3000],
     },
     direction: 'bt',
 }

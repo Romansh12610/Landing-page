@@ -10,13 +10,6 @@ $cardGap: 40;
         transform: translateY(0);
     }
 
-    // on mobile always small svg
-    @include breakpointUp(768) {
-        & > svg {
-            transform: translateY(-20px) scale(0.6);
-        }
-    }
-
 
     // hover state on parent
     &:hover {
@@ -82,6 +75,7 @@ $cardGap: 40;
     }
 }
 
+
 .card__titleSvg_wrapper {
     @include flexCol(center, space-between);
 
@@ -95,10 +89,14 @@ $cardGap: 40;
     transform-origin: center top;
     z-index: 0;
     padding-top: pxRem(20);
+
+    @include breakpointUp(768) {
+        height: pxRem(250);
+    }
     
     @include breakpointUp(1200) {
         gap: pxRem(40);
-        align-items: flex-start;
+        justify-content: center;
         height: fit-content;
         padding: pxRem(40) pxRem(20) 0;
     }
@@ -128,7 +126,7 @@ $cardGap: 40;
         transform: scale(0.8) translateY(15px);
 
         @include breakpointUp(768) {
-            transform: scale(0.6);
+            transform: scale(0.9) translateY(15px);
         }
         
         @include breakpointUp(1200) {

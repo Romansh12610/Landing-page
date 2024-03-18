@@ -50,7 +50,7 @@ const CARD_ANIMATION_DATA: CardAnimationData[] = [
         step: 28,
         direction: 'tb',
         borders: {
-            translateBorders: [-45, 150],
+            translateBorders: [-45, 120],
             scrollEnterBorders: [1200, 2500],
         },
     },
@@ -58,7 +58,7 @@ const CARD_ANIMATION_DATA: CardAnimationData[] = [
         step: 35,
         direction: 'bt',
         borders: {
-            translateBorders: [450, 150],
+            translateBorders: [400, 120],
             scrollEnterBorders: [1200, 2500],
         },
     },
@@ -66,7 +66,7 @@ const CARD_ANIMATION_DATA: CardAnimationData[] = [
         step: 24,
         direction: 'tb',
         borders: {
-            translateBorders: [-10, 150],
+            translateBorders: [-10, 120],
             scrollEnterBorders: [1200, 2500],
         },
     },

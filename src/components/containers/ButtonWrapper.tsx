@@ -7,7 +7,6 @@ import { useScrollContext } from "@/hooks/useScrollContext";
 import styles from "@/styles/modules/btnContainer.module.scss";
 import { PropertyDescriptionTY, transformElementOnScroll } from "@/utils/transformElementOnScroll";
 import { TupleNum2 } from "@/types/tuples";
-import { TimerType } from "@/types/timerType";
 
 
 type TransformsType = Omit<PropertyDescriptionTY, 'currentValueRef' | 'borders'> & {
@@ -18,10 +17,10 @@ type TransformsType = Omit<PropertyDescriptionTY, 'currentValueRef' | 'borders'>
 };
 // transforms
 const TRANSFORMS: TransformsType = {
-    step: 55,
+    step: 43,
     borders: {
-        scroll: [2650, 3500],
-        translateY: [400, -515],
+        scroll: [2600, 3400],
+        translateY: [400, 120],
     },
     direction: 'bt',
 } 

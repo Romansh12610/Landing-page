@@ -125,18 +125,24 @@
         // default state of text
         height: fit-content;
         overflow: hidden;
-
+        
         @include breakpointDown(768) {
             justify-content: flex-start;
             align-items: flex-start;
             max-width: 92vw;
             font-size: pxRem(52);
-
+            
             & > span {
                 text-align: left;
                 white-space: normal;
                 min-height: 100px;
             }
+        }
+        
+        @include breakpointUp(1200) {
+            align-self: center;
+            padding: 0;
+            text-align: center;
         }
 
         & span {
