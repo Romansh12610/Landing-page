@@ -15,4 +15,8 @@
     @include breakpointUp(768) {
         margin-top: pxRem(0);
     }
+
+    @include breakpointUp(1200) {
+        transform: translateY(400px);
+    }
 }

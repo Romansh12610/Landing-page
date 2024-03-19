@@ -8,6 +8,8 @@
     transition: transform var(--cubic-bezier) var(--time-running-line);
     will-change: transform;
 
+    transform: translateX(-500px) rotate(6deg);
+
     &[data-mode=small] {
         background-color: var(--color-bright);
     }

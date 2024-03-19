@@ -24,4 +24,8 @@
         
         margin-bottom: pxRem(80);
     }
+
+    @include breakpointUp(1200) {
+        transform: translateY(350px);
+    }
 }
