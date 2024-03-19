@@ -35,7 +35,7 @@ const TRANSFORMS_DATA: CardAnimationData = {
     step: 43,
     borders: {
         translateBorders: [350, 110],
-        scrollEnterBorders: [2300, 3000],
+        scrollEnterBorders: [2150, 3000],
     },
     direction: 'bt',
 }
