@@ -19,8 +19,8 @@ interface RunningLineSmallProps {
 
 export const RunningLineSmall = ({ animationScrollBorders }: RunningLineSmallProps) => {
 
-    const renderingSpanItems = new Array(8).fill(0).map(() => {
-        return <RunningLineItemSmall text={TEXT} />
+    const renderingSpanItems = new Array(8).fill(0).map((_, ind) => {
+        return <RunningLineItemSmall key={`${ind * 3}`} text={TEXT} />
     });
 
     return (
