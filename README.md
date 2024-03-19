@@ -1,5 +1,5 @@
 
-## This is Landing Page.
+## Landing Page with Custom scroll and Svg background.
 
 Build with Next js.
 
