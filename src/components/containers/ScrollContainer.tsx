@@ -120,8 +120,6 @@ export const ScrollContainer = ({ children }: ScrollContainerProps) => {
         const handleCustomScroll = (e: WheelEvent) => {
             e.preventDefault();
 
-            console.log('current scroll: ', scrollValueRef.current);
-
             // if not actual states
             if (scrollBordersState.isSettled === false || translateBordersState.isSettled === false) return;
 
